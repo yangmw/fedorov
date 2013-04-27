@@ -1,5 +1,5 @@
 # Date created: 27 Apr 2013
-# Last Modified: 27 Apr 2013 (03:15:53)
+# Last Modified: 27 Apr 2013 (19:16:53)
 #
 # Brief: "make" will compile and run a linear interpolation of 
 # a given data set which will be produced from "main.c" and read
@@ -11,10 +11,10 @@
 # License:copyleft
 # Author:Yang Min Wang (ymwang@chem.au.dk)
 
-CC = gcc            # Set compiler
-CFLAGS = -O3 -Wall  # Set compiler flags for C
+CC = gcc             # Set compiler
+CFLAGS = -O3 -Wall   # Set compiler flags for C
 #LDLIBS += -lm -lgc  # Extra libraries to link
-#LIFA = $(findstring lifa, $(shell hostname)) # Am I on lifa?
+HOST = $(findstring lifa, $(shell hostname)) # Am I on lifa?
 #GRAPH = $(/usr/users/fedorov/bin/graph)
 
 # Set default target (for make)
@@ -28,7 +28,7 @@ spline.dat: main
 	./main > splot.dat 
 
 # Linking the main program
-main : main.o linterp.o bsearch.o
+main : main.o linterp.o bsearch.o polinterp.o
 #	$(CC) -o main main.o linterp.o bsearch.o 
 
 main.o: main.c	
@@ -40,9 +40,16 @@ linterp.o: linterp.c bsearch.c
 bsearch.o: bsearch.c
 #	$(CC) -c $< -o $@
 
+polyinterp.o: polinter.c
+
 # Set read premissions using subshell (;)
-set_permissions: 
-	@(cd ../../../; chmod -R go+xr public_html) 
+set_permissions:
+ifeq ($(HOST), lifa) 
+	@(cd ../../../; chmod -R go+xr public_html)
+	@echo Permissions set
+else
+	@echo No permissions set: you are not on lifa
+endif
 
 ##########################################################
 
