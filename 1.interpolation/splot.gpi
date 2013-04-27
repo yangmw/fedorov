@@ -1,5 +1,6 @@
 reset
 
+#set border linewidth 1
 #unset key
 set key left top
 
