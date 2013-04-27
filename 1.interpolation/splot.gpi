@@ -4,7 +4,7 @@ reset
 #unset key
 set key left top
 
-set autoscale
+get autoscale
 set terminal svg size 800 600 fname 'Helvetica' fsize 14
 set output 'plot.svg'
 
