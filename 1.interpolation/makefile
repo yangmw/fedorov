@@ -1,5 +1,5 @@
 # Date created: 27 Apr 2013
-# Last Modified: 27 Apr 2013 (22:23:17)
+# Last Modified: 27 Apr 2013 (23:22:46)
 #
 # Brief: "make" will compile and run a linear interpolation of 
 # a given data set which will be produced from "main.c" and read
@@ -44,13 +44,15 @@ polyinterp.o: polinter.c
 
 # Set read premissions using subshell (;)
 set_permissions:
-ifeq ($(HOST), lifa ) 
+#ifeq ($(HOST), lifa ) 
 	@(cd ../../../; chmod -R go+xr public_html)
-	@echo Permissions set
-else
-	@echo host
-	@echo No permissions set: you are not on lifa
-endif
+#	@echo Permissions set
+#else ifeq($(shell hostname), ymwang-MBPro.local )
+#	
+#else 
+#	@echo host
+#	@echo No permissions set: you are not on lifa
+#endif
 
 ##########################################################
 
@@ -64,6 +66,6 @@ clean:
 backup: interpolation.tgz
 
 interpolation.tgz: makefile $(shell ls *.c)
-	@tar --create --gzip --file=interpolation.tgz makefile *.c
+	@tar --create --gzip --file=interpolation.tgz makefile splot.gpi *.c
 	@tar --list --file=interpolation.tgz
 	@echo Backup done
