@@ -1,8 +1,22 @@
+# Run with gnuplot version >= 4.6 
+# Date created: 27 Apr 2013
+# Last Modified: 27 Apr 2013 (23:05:09)
+
+# Brief: plot spline interpolations and polynomial interpolation
+# Input: splot.data
+# Output: plot.svg
+
+# License:copyleft
+# Author:Yang Min Wang (ymwang@chem.au.dk)
+
 reset
 
 #set border linewidth 1
 #unset key
-set key left top
+
+set style line 9 lc 0 lt 1 lw 2 
+set key box linestyle 9
+set key center top 
 
 set autoscale
 set terminal svg size 800 600 fname 'Helvetica' fsize 14
@@ -13,7 +27,7 @@ set style line 3 lc rgb '#FF0000' lt 1 lw 2 pt 7 ps 1     # --- red
 set style line 5 lc rgb '#008000' lt 1 lw 2 pt 7 ps 1     # --- green
 
 set style line 2 lc rgb '#FF0000' lt 1 lw 2 pt 7 ps 1     # --- red  
-set style line 4 lc rgb '#FF00FF' lt 0 lw 2 pt 7 ps 1     # --- magenta 	
+set style line 4 lc rgb '#008000' lt 1 lw 2 pt 7 ps 1     # --- green	
 set style line 6 lc rgb '#FFC0CB' lt 4 lw 2 pt 7 ps 1     # --- pink
 
 set xlabel "x"
