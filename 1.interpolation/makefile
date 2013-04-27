@@ -13,7 +13,7 @@
 
 CC = gcc             # Set compiler
 CFLAGS = -O3 -Wall   # Set compiler flags for C
-#LDLIBS += -lm -lgc  # Extra libraries to link
+LDLIBS += -lm        # Extra libraries to link
 HOST = $(findstring lifa, $(shell hostname)) # Am I on lifa?
 #GRAPH = $(/usr/users/fedorov/bin/graph)
 
@@ -44,10 +44,11 @@ polyinterp.o: polinter.c
 
 # Set read premissions using subshell (;)
 set_permissions:
-ifeq ($(HOST), lifa) 
+ifeq ($(HOST), lifa ) 
 	@(cd ../../../; chmod -R go+xr public_html)
 	@echo Permissions set
 else
+	@echo host
 	@echo No permissions set: you are not on lifa
 endif
 
@@ -55,7 +56,7 @@ endif
 
 # Target clean all
 clean: 
-	@rm -f main.o linterp.o bsearch.o
+	@rm -f main.o linterp.o bsearch.o polinterp.o
 	@rm -f splot.dat
 	@rm -f plot.svg
 	@echo Clean done
