@@ -1,11 +1,11 @@
 reset
 
-set border linewidth 1
+#set border linewidth 1
 #unset key
 set key left top
 
 set autoscale
-set terminal svg size 800,600 fname 'Helvetica' fsize 14
+set terminal svg size 800 600 fname 'Helvetica' fsize 14
 set output 'plot.svg'
 
 set style line 1 lc rgb '#0000FF' lt 1 lw 2 pt 7 ps 1     # --- blue

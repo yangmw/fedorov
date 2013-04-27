@@ -1,5 +1,5 @@
 # Date created: 27 Apr 2013
-# Last Modified: 27 Apr 2013 (19:16:53)
+# Last Modified: 27 Apr 2013 (22:23:17)
 #
 # Brief: "make" will compile and run a linear interpolation of 
 # a given data set which will be produced from "main.c" and read
@@ -44,7 +44,7 @@ polyinterp.o: polinter.c
 
 # Set read premissions using subshell (;)
 set_permissions:
-ifeq ($(HOST), lifa) 
+ifeq ($(HOST), lifa ) 
 	@(cd ../../../; chmod -R go+xr public_html)
 	@echo Permissions set
 else
@@ -55,7 +55,7 @@ endif
 
 # Target clean all
 clean: 
-	@rm -f main.o linterp.o bsearch.o
+	@rm -f main.o linterp.o bsearch.o polinterp.o
 	@rm -f splot.dat
 	@rm -f plot.svg
 	@echo Clean done
