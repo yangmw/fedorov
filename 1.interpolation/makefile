@@ -1,5 +1,5 @@
 # Date created: 27 Apr 2013
-# Last Modified: 27 Apr 2013 (23:22:46)
+# Last Modified: 28 Apr 2013 (18:36:48)
 #
 # Brief: "make" will compile and run a linear interpolation of 
 # a given data set which will be produced from "main.c" and read
@@ -58,7 +58,7 @@ set_permissions:
 
 # Target clean all
 clean: 
-	@rm -f main.o linterp.o bsearch.o polinterp.o
+	@rm -f main main.o linterp.o bsearch.o polinterp.o
 	@rm -f splot.dat
 	@rm -f plot.svg
 	@echo Clean done
