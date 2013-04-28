@@ -1,5 +1,5 @@
 # Date created: 27 Apr 2013
-# Last Modified: 28 Apr 2013 (23:54:46)
+# Last Modified: 29 Apr 2013 (00:02:09)
 #
 # Brief: 
 # Input: 
@@ -22,7 +22,7 @@ qr: main
 	./main > splot.dat 
 
 # Linking the main program
-main : main.o polinterp.o linterp.o qspline.o bsearch.o 
+main : main.o 
 #	$(CC) -o main main.o linterp.o bsearch.o 
 
 main.o: main.c	
