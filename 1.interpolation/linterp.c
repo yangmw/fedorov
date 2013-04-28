@@ -1,19 +1,20 @@
-// Brief: Algorithm for the linear spline interpolation 
-// Input: point evaluated at z, and x and y vector for the points
-// Output: value at the point z for the selected linear spline, 
-// the algorithm uses bsearch to find which spline the point z belong to.
+// Date created: 28 Apr 2013
+// Last Modified: 28 Apr 2013 (21:58:21)
 //
-// Author: Yang M. Wang	
-// Date: April 2013
+// Brief: Linear spline interpolation algorithm 
+// Input: x[n],y[n], point z
+// Output: value s  
+//
+// License:copyleft
+// Author:Yang Min Wang (ymwang@chem.au.dk)
 
 #include <stdio.h>
 #include <assert.h> 
 
-int bsearch(double z, double* x, double* y, int n);
+int binary_search(double z, double* x, double* y, int n);
 
 double linterp(double z, double *x, double *y, int n){
-
-	// The must z must be in the range x_0 < z < x_(n-1) 
+	//The must z value must be in the range x_0 <= z <= x_(n-1) 
 	assert(z>=x[0] && z<=x[n-1] && n>1);
 
 	double s = 0;
@@ -23,15 +24,10 @@ double linterp(double z, double *x, double *y, int n){
 #ifdef DEBUG
 	printf("Inside linterp\n");
 #endif		
-
-	i = bsearch(z, x, y, n);
-
-	//p_i = y_(i+1)-y_i/x_(i+1)-x(i) 
+	//Call to the binary search algorithm 	
+	i = binary_search(z, x, y, n);
 	p = (y[i+1]-y[i])/(x[i+1]-x[i]);
-
-	//S_i(z) = y_i + p_i (z -x_i)
 	s = y[i] + p*(z-x[i]);
-
 	return s;
 }
 

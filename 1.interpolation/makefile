@@ -1,5 +1,5 @@
 # Date created: 27 Apr 2013
-# Last Modified: 28 Apr 2013 (18:36:48)
+# Last Modified: 28 Apr 2013 (23:03:50)
 #
 # Brief: "make" will compile and run a linear interpolation of 
 # a given data set which will be produced from "main.c" and read
@@ -14,7 +14,7 @@
 CC = gcc             # Set compiler
 CFLAGS = -O3 -Wall   # Set compiler flags for C
 LDLIBS += -lm        # Extra libraries to link
-HOST = $(findstring lifa, $(shell hostname)) # Am I on lifa?
+HOST = $(shell hostname) # Am I on lifa?
 #GRAPH = $(/usr/users/fedorov/bin/graph)
 
 # Set default target (for make)
@@ -28,7 +28,7 @@ spline.dat: main
 	./main > splot.dat 
 
 # Linking the main program
-main : main.o linterp.o bsearch.o polinterp.o
+main : main.o polinterp.o linterp.o qspline.o bsearch.o 
 #	$(CC) -o main main.o linterp.o bsearch.o 
 
 main.o: main.c	
@@ -37,6 +37,9 @@ main.o: main.c
 linterp.o: linterp.c bsearch.c  
 #	$(CC) -c linterp.c -o linterp.o bsearch.o 
 
+qspline.o: qspline.c bsearch.c
+#	$(CC) -c $< -o 
+
 bsearch.o: bsearch.c
 #	$(CC) -c $< -o $@
 
@@ -44,21 +47,18 @@ polyinterp.o: polinter.c
 
 # Set read premissions using subshell (;)
 set_permissions:
-#ifeq ($(HOST), lifa ) 
+ifneq ($(HOST), ymwang-MBPro.local ) 
 	@(cd ../../../; chmod -R go+xr public_html)
-#	@echo Permissions set
-#else ifeq($(shell hostname), ymwang-MBPro.local )
-#	
-#else 
-#	@echo host
-#	@echo No permissions set: you are not on lifa
-#endif
+	@echo Permissions set
+else
+	@echo No Permissions set
+endif
 
 ##########################################################
 
 # Target clean all
 clean: 
-	@rm -f main main.o linterp.o bsearch.o polinterp.o
+	@rm -f main main.o linterp.o qspline.o bsearch.o polinterp.o
 	@rm -f splot.dat
 	@rm -f plot.svg
 	@echo Clean done

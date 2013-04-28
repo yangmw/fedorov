@@ -1,5 +1,5 @@
 // Date created: 27 Apr 2013
-// Last Modified: 27 Apr 2013 (19:24:23)
+// Last Modified: 28 Apr 2013 (21:58:29)
 //
 // Brief: Algorithm for polynomial interpolation  
 // Input: m points (x,y) 

@@ -1,6 +1,6 @@
 # Run with gnuplot version >= 4.6 
 # Date created: 27 Apr 2013
-# Last Modified: 27 Apr 2013 (23:35:05)
+# Last Modified: 28 Apr 2013 (21:44:26)
 
 # Brief: plot spline interpolations and polynomial interpolation
 # Input: splot.data
@@ -34,5 +34,5 @@ set title  "Interpolation"
 
 plot 'splot.dat' index 0 with points pt 7 title "points", \
      ''          index 1 with lines  title "polynomial", \
-     ''          index 2 with lines  title "linear spline"
-
+     ''          index 2 with lines  title "linear spline", \
+     ''          index 3 with lines  title "quadratic spline"
