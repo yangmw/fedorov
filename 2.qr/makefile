@@ -1,5 +1,5 @@
 # Date created: 27 Apr 2013
-# Last Modified: 29 Apr 2013 (00:02:09)
+# Last Modified: 29 Apr 2013 (00:06:57)
 #
 # Brief: 
 # Input: 
@@ -8,24 +8,28 @@
 # License:copyleft
 # Author:Yang Min Wang (ymwang@chem.au.dk)
 
-CC = gcc             # Set compiler
-CFLAGS = -O3 -Wall   # Set compiler flags for C
-LDLIBS += -lm -lgc   # Extra libraries to link
-HOST = $(shell hostname) # Am I on lifa?
+CC = gcc             		# Set compiler
+CFLAGS = -O3 -Wall   		# Set compiler flags for C
+LDLIBS += -lm -lgc -lgsl  	# Extra libraries to link
+HOST = $(shell hostname) 	# Am I on lifa?
 #GRAPH = $(/usr/users/fedorov/bin/graph)
 
 # Set default target (for make)
-all: clean qr 
+all: clean matrix 
 	@echo Run completed successfully 
 
-qr: main
+qr: main matrix
 	./main > splot.dat 
 
 # Linking the main program
 main : main.o 
 #	$(CC) -o main main.o linterp.o bsearch.o 
 
-main.o: main.c	
+main.o: main.c
+
+matrix: matrix.o
+
+matrix.o: matrix.c
 #	$(CC) -c main.c -o main.o
 
 # Set read premissions using subshell (;)
