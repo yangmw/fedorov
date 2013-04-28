@@ -22,7 +22,7 @@ qr: main
 	./main > splot.dat 
 
 # Linking the main program
-main : main.o polinterp.o linterp.o qspline.o bsearch.o 
+main : main.o
 #	$(CC) -o main main.o linterp.o bsearch.o 
 
 main.o: main.c	
