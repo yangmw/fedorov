@@ -1,5 +1,5 @@
 // Date created: 29 Apr 2013
-// Last Modified: 29 Apr 2013 (00:29:36)
+// Last Modified: 29 Apr 2013 (11:10:20)
 //
 // Brief:
 // Input:
@@ -15,7 +15,7 @@
 
 int main (void){
 	int i, j; 
-	gsl_marix * m = gsl_matrix_alloc (10, 3);
+	gsl_matrix * m = gsl_matrix_alloc (10, 3);
 
 	for (i = 0; i < 10; i++)
 		for (j = 0; j < 3; j++)

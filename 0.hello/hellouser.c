@@ -1,9 +1,8 @@
 // Date created: 27 Apr 2013
-// Last Modified: 27 Apr 2013 (02:36:42)
+// Last Modified: 29 Apr 2013 (17:01:24)
 //
 // Brief: prints "hello, ymwang" to the screen
-// Input:
-// Output:
+// Output: string
 //
 // License:copyleft
 // Original Author:
@@ -12,6 +11,6 @@
 #include<stdio.h>
 
 int main(){
-	printf("hello, ymwang");
+	printf("hello, ymwang \n");
 	return 0;
 }
