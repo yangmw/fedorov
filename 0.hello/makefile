@@ -1,5 +1,5 @@
 # Date created: 27 Apr 2013
-# Last Modified: 27 Apr 2013 (02:55:40)
+# Last Modified: 29 Apr 2013 (16:58:50)
 #
 # Brief: 
 # Input: N/A
@@ -11,24 +11,24 @@
 CC = gcc             # Set compiler
 CFLAGS = -O3 -Wall   # Set compiler flags for C
 #LDLIBS += -lm -lgc  # Extra libraries to link
-#LIFA = $(findstring lifa, $(shell hostname)) # Am I on lifa?
+HOST = $(findstring ymwang, $(shell hostname)) # Am I on lifa?
 #GRAPH = $(/usr/users/fedorov/bin/graph)
 
 # Set default targets (for make)
-all: A B zipfile set_permissions 
+all: A B set_permissions 
 	@echo Run completed successfully 
 
 A: out.A.txt
 
 out.A.txt: hellouser
-	./hellouser > out.A.txt
+	./hellouser
 
 hellouser: hellouser.c
 
 B: out.B.txt
 
 out.B.txt: main
-	./main > out.B.txt
+	./main 
 
 # Linking the main program
 main: main.o hello.o user.o
@@ -40,8 +40,11 @@ hello.o: hello.c
 user.o: user.c
 
 # Set read premissions using subshell (;)
-set_permissions: 
-	@(cd ../../../; chmod -R go+xr public_html) 
+set_permissions:
+ifneq ($(HOST), ymwang ) 
+	@(cd ../../../; chmod -R go+xr public_html)
+	@echo Permissions set
+endif
 
 ##########################################################
 
@@ -70,9 +73,9 @@ checkB: out.B.txt
 	@echo "target B seems to be ok"
 	@rm -f correct.txt 
 
-backup: git zipfile
+backup: hello.tgz
 
-zipfile: hello.tgz
+mail_zipfile: hello.tgz
 #'base64 $(shell pwd)/hello.tgz \
 #| mailx -s "hello backup" $(shell whoami)@phys.au.dk'
 
@@ -80,7 +83,6 @@ hello.tgz: makefile $(shell ls *.c)
 	tar --create --gzip --file=hello.tgz makefile *.c
 	tar --list --file=hello.tgz
 
-git:
 
 
 	

@@ -1,5 +1,5 @@
 # Date created: 27 Apr 2013
-# Last Modified: 29 Apr 2013 (00:06:57)
+# Last Modified: 29 Apr 2013 (16:48:00)
 #
 # Brief: 
 # Input: 
@@ -8,10 +8,10 @@
 # License:copyleft
 # Author:Yang Min Wang (ymwang@chem.au.dk)
 
-CC = gcc             		# Set compiler
-CFLAGS = -O3 -Wall   		# Set compiler flags for C
-LDLIBS += -lm -lgc -lgsl  	# Extra libraries to link
-HOST = $(shell hostname) 	# Am I on lifa?
+CC = cc             		          # Set compiler
+CFLAGS += -O3 -Wall `gsl-config --cflags` # Set compiler flags for C
+LDLIBS += `gsl-config --libs` 		  # Extra libraries to link
+HOST = $(shell hostname) 		  # Am I on lifa?
 #GRAPH = $(/usr/users/fedorov/bin/graph)
 
 # Set default target (for make)
@@ -19,7 +19,7 @@ all: clean matrix
 	@echo Run completed successfully 
 
 qr: main matrix
-	./main > splot.dat 
+	./matrix
 
 # Linking the main program
 main : main.o 
