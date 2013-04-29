@@ -1,5 +1,5 @@
 # Date created: 27 Apr 2013
-# Last Modified: 29 Apr 2013 (16:58:50)
+# Last Modified: 29 Apr 2013 (17:04:03)
 #
 # Brief: 
 # Input: N/A
@@ -21,14 +21,14 @@ all: A B set_permissions
 A: out.A.txt
 
 out.A.txt: hellouser
-	./hellouser
+	./hellouser > out.A.txt
 
 hellouser: hellouser.c
 
 B: out.B.txt
 
 out.B.txt: main
-	./main 
+	./main > out.B.txt
 
 # Linking the main program
 main: main.o hello.o user.o
