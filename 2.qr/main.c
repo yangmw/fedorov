@@ -1,5 +1,5 @@
 // Date created: 29 Apr 2013
-// Last Modified: 29 Apr 2013 (11:10:20)
+// Last Modified: 30 Apr 2013 (11:34:24)
 //
 // Brief:
 // Input:
@@ -21,7 +21,7 @@ int main (void){
 		for (j = 0; j < 3; j++)
 			gsl_matrix_set (m, i, j, 0.23 + 100*i + j);
 
-	for (i = 0; i < 100; i++)  /* OUT OF RANGE ERROR */
+	for (i = 0; i < 10; i++)  /* OUT OF RANGE ERROR */
 		for (j = 0; j < 3; j++)
 			printf ("m(%d,%d) = %g\n", i, j, 
 					gsl_matrix_get (m, i, j));

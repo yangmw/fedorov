@@ -1,6 +1,6 @@
 // Filename: vector.c
 // Date created: 30 Apr 2013
-// Last Modified: 30 Apr 2013 (14:06:30)
+// Last Modified: 30 Apr 2013 (21:51:06)
 //
 // Brief: Methods for the Vector type structure
 // Input: n elements 
@@ -31,9 +31,6 @@ vec* vec_alloc(size_t n){
 	v->value = (double *)malloc(n*sizeof(double));
 	return v; 
 }
-
-
-
 
 void vec_free(vec *v){
 	assert(v->owner); 

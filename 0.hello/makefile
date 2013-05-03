@@ -1,14 +1,15 @@
+# Filename: makefile
 # Date created: 27 Apr 2013
-# Last Modified: 29 Apr 2013 (17:04:03)
+# Last Modified: 30 Apr 2013 (16:15:53)
 #
-# Brief: 
+# Brief: makefile for the helloworld program 
 # Input: N/A
 # Output: print out "hello, ymwang" and redirects into file
 #
 # License:copyleft
 # Author:Yang Min Wang (ymwang@chem.au.dk)
 
-CC = gcc             # Set compiler
+CC = cc              # Set compiler
 CFLAGS = -O3 -Wall   # Set compiler flags for C
 #LDLIBS += -lm -lgc  # Extra libraries to link
 HOST = $(findstring ymwang, $(shell hostname)) # Am I on lifa?
@@ -49,7 +50,8 @@ endif
 ##########################################################
 
 # Target clean all
-clean: cleanA cleanB 
+clean: cleanA cleanB
+	-rm -f *.tgz
 	@echo Clean done
 
 cleanA: 
