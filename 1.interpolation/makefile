@@ -1,5 +1,5 @@
 # Date created: 27 Apr 2013
-# Last Modified: 29 Apr 2013 (16:55:15)
+# Last Modified: 30 Apr 2013 (14:50:26)
 #
 # Brief: "make" will compile and run a linear interpolation of 
 # a given data set which will be produced from "main.c" and read
@@ -14,7 +14,7 @@
 CC = gcc             # Set compiler
 CFLAGS = -O3 -Wall   # Set compiler flags for C
 LDLIBS += -lm        # Extra libraries to link
-HOST = $(shell hostname) # Am I on lifa?
+HOST = $(findstring ymwang, $(shell hostname)) # Am I on lifa?
 #GRAPH = $(/usr/users/fedorov/bin/graph)
 
 # Set default target (for make)
