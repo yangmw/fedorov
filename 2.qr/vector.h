@@ -10,7 +10,7 @@
 // Original Author: Dimitri Fedorov (fedorov@phys.au.dk)
 // Author:Yang Min Wang (ymwang@chem.au.dk)
 
-#include <studio.h>
+#include <stdio.h>
 #include <stdbool.h>
 
 #ifndef VECTOR_H
@@ -20,10 +20,19 @@ typedef struct {
 	bool owner;
 } vec;
 
-vec* vector_alloc (size_t n);
-double vec_get(const vec *v, const size_t i);
-void vec_set(vec *v, const size_t i, double value); 
+vec* vec_alloc (size_t n);
 void vec_free(vec *v);
+double vec_get(const vec *v, const size_t idx);
+void vec_set(vec *v, const size_t idx, double value); 
+void vec_print(vec *v,const char *type, int precision);
+
+vec* vec_add(const vec *u, const vec *v);
+vec* vec_sub(const vec *u, const vec *v);
+vec* vec_prod(const vec *u, const vec *v);
+vec* vec_div(const vec *u, const vec *v);
+vec* vec_pow(const vec *v, int n);
+double vec_norm(const vec *v);
+double vec_dot(const vec *u, const vec *v);
 
 #define VECTOR_H
 #endif
