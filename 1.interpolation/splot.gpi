@@ -14,7 +14,7 @@ reset
 #set border linewidth 1
 #unset key
 
-set key auto
+#set key auto
 
 #get autoscale
 set terminal svg size 800 600 fname 'Helvetica' fsize 14

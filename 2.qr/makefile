@@ -9,8 +9,8 @@
 # Author:Yang Min Wang (ymwang@chem.au.dk)
 
 CC = cc             		               # Set compiler
-CFLAGS += -O3 -Wall -I/opt/local/include -I.        # Set compiler flags for C
-LDLIBS += -L/opt/local/lib -lgsl -lgslcblas    # Extra libraries to link
+CFLAGS += -O3 -Wall -std=c99 -I/opt/local/include -I.        # Set compiler flags for C
+LDLIBS += -lm -L/opt/local/lib -lgsl -lgslcblas    # Extra libraries to link
 HOST = $(findstring ymwang, $(shell hostname)) # Am I on lifa?
 #GRAPH = $(/usr/users/fedorov/bin/graph)
 
