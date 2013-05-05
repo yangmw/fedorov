@@ -1,5 +1,5 @@
 # Date created: 27 Apr 2013
-# Last Modified: 04 May 2013 (22:09:32)
+# Last Modified: 05 May 2013 (12:21:30)
 #
 # Brief: 
 # Input: 
@@ -20,25 +20,26 @@ all: clear_screen clean qr runtest set_premissions
 
 # Clean screen
 clear_screen:
+	clear 
 	clear
 
 # RUN 
 runtest: test 
 	./test
-test: test.o vector.o
+test: test.o vector.o matrix.o
 test.o: test.c
 qr: main 
 	./main
 
 # Linking the main program
-main: main.o vector.o
+main: main.o vector.o matrix.o
 #	$(CC) -o main main.o linterp.o bsearch.o 
 main.o: main.c
 #
 # Linking header files
-main.c: vector.h
+main.c: vector.h matrix.h
 
-test.c: vector.h
+test.c: vector.h matrix.h
 
 # Set read premissions using subshell (;)
 set_premissions:

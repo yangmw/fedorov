@@ -1,6 +1,6 @@
 // Filename: vector.h
 // Date created: 30 Apr 2013
-// Last Modified:
+// Last Modified: 05 May 2013 (16:29:22)
 //
 // Brief: Header file for the vector structure
 // Input: number of elements
@@ -15,15 +15,15 @@
 
 #ifndef VECTOR_H
 typedef struct {
-	size_t size, stride;
-	double *value;
+	size_t n, stride;
+	double *val;
 	bool owner;
 } vec;
 
-vec* vec_alloc (size_t n);
+vec* vec_new(size_t n);
 void vec_free(vec *v);
 double vec_get(const vec *v, const size_t idx);
-void vec_set(vec *v, const size_t idx, double value); 
+void vec_set(vec *v, const size_t idx, double val); 
 void vec_print(vec *v,const char *type, int precision);
 
 vec* vec_add(const vec *u, const vec *v);
