@@ -1,5 +1,5 @@
 // Date created: 29 Apr 2013
-// Last Modified: 06 May 2013 (10:37:44)
+// Last Modified: 09 May 2013 (23:16:08)
 //
 // Brief:
 // Input:
@@ -16,37 +16,53 @@
 #include <qr.h>
 #include <math.h>
 
+int m = 3;
+int n = 3;
 
-double in[5][3] = {
-	{ 12, -51,   4},
-	{  6, 167, -68},
-	{ -4,  24, -41},
-	{ -1, 1, 0},
-	{ 2, 0, 3},
+double in[3][3] = {
+	{  1,  -1,   4},
+	{  6,   1,  -1},
+	{ -4,   2,  -4},
 };
 
 int main (void){
-    //Setup matrix A
-    printf("Setting up Matrix A for QR-algorithm...\n");
-    int m = 5;
-    int n = 3;
+    printf("Setting up Matrix A for QR-algorithm for square matrices...\n");
     int pre = 2;
-    mat A = mat_new(m,n);
-    mat R = mat_new(m,n);
+    mat* A = mat_new(m,n);
+    mat* Q = mat_new(m,m);
+    mat* R = mat_new(m,n);
+    mat* C = mat_new(m,n);
+
+    //Setup matrix A
     for(int i=0; i<m; i++)
 	for(int j=0; j<n; j++)
-	    A->val[i][j] = in[i][j]; 
+	    mat_set(A,i,j,in[i][j]); 
 
     printf("Matrix A: \n");
     mat_print(A, pre);
-    qrdec(A,R);
+
+    //QR-algorithm
+    qrdec(Q, R, A);
 
     printf("Matrix R: \n");
-    mat_print(R, pre);
+    mat_print(R, pre); 
 
-    printf("Matrix Q*R: \n");
+    printf("Matrix Q: \n");
     mat_print(A, pre);
 
+    printf("Matrix Q' x Q: \n");
+    mat_mul_T(C,A,A);
+    mat_print(C, pre);
+   
+    printf("Matrix Q x R: \n");
+    mat_mul(C, A, R);
+    mat_print(C, pre);
+
+    //Free memory
+    mat_free(C);
+    mat_free(A);
+    mat_free(R);
+    mat_free(Q);
 
     return 0;
 }

@@ -1,12 +1,11 @@
 // Filename: matrix.c
 // Date created: 05 May 2013
-// Last Modified: 06 May 2013 (10:37:40)
+// Last Modified: 09 May 2013 (22:49:05)
 //
 // Brief: Methods for matrix type structure
 // The matrix is of typedef mat with a column major structure
 //
 // 		offset = row + column*number_of_rows
-//
 //
 // Input: (n,m) elements
 // Output: N/A
@@ -17,75 +16,60 @@
 
 #include <math.h>
 #include <assert.h>
-#ifndef VECTOR_H
+
 #include <vector.h>
-#endif 
+
 #ifndef size_t
 #include <stddef.h>
 #endif
+
 #include <stdlib.h>
 #include <string.h>
 
 typedef struct {
 	size_t row;
 	size_t col;
-	double **val;
+	double *val;
 	bool owner;
-} mat_t, *mat;
+} mat;
 
-mat mat_new(size_t m, size_t n){
+mat* mat_new(size_t m, size_t n){
   assert(m > 0 && n > 0);
-  mat A = malloc(sizeof(mat_t));
-  A->val = malloc(sizeof(double)*m);
-  A->val[0] = calloc(sizeof(double), m*n);
-
-  //Row Major Ordering (i.e. loop over col first) c[2][1])
-  for(int i=0; i<m; i++){
-    A->val[i] = A->val[0] + i*n;
-  }
+  mat* A = (mat*)malloc(sizeof(mat));
+  assert(A != 0);
+  A->val = (double*)malloc(m*n*sizeof(double));
   A->row = m;
   A->col = n;
   A->owner = true;	
   return A;
 }
 
-void mat_free(mat A){
+void mat_free(mat* A){
   assert(A->owner);
-  free(A->val[0]);
   free(A->val);
   free(A);
 }
 
-double mat_get(const mat A, const size_t i, const size_t j){
+double mat_get(const mat* A, const size_t i, const size_t j){
   assert(i < A->row && j < A->col);
-  return A->val[i][j];
+  return A->val[i+j*A->row]; //column major ordering
 }
 
-void mat_set(const mat A, const size_t i, const size_t j, double value){
-  assert(i < A->col && j < A->col);
-  A->val[i][j] = value;
+void mat_set(const mat* A, const size_t i, const size_t j, double value){
+  assert(i < A->row && j < A->col);
+  A->val[i+j*A->row] = value;
 }
 
-vec mat_get_col(const mat A, const size_t j){
-  assert(j< A->col);
-  vec v = vec_new(A->row);
-  double value = 0;
-  for(int i=0; i<A->row; i++){
-	value = mat_get(A,i,j);
-	vec_set(v,i,value);
-  }
-    return v;
+vec* mat_get_col(const mat* A, const size_t i){
+  vec* c = vec_new(A->row);
+  assert(i < A->col && c->size == A->row);
+  c->val = A->val + i*A->row;
+  return c;
+  vec_free(c);
+  printf("free vector c \n");
 }
 
-//mat mat_put(int n; double a[][n], int m, int n){
-	//mat A = mat_new[m][n];
-	//for(int i=0; i<m; i++)
-	    //for(int j=0; j<n; j++)
-	    	//A->val[i][j] = a[i][j];
-	//return A;
-//}
-
-void mat_print(const mat A, int pre){
+void mat_print(const mat* A, int pre){
   assert(A->row > 0 && A->col > 0);
   assert(pre < 18 && pre > 0);
   for(int i=0; i<A->row; i++){
@@ -97,79 +81,58 @@ void mat_print(const mat A, int pre){
   printf("# \n");
 }
 
-// C(m,n) = A(m,n) + s*B(m,n)
-mat mat_add(const mat A, const mat B, double s){
-  assert(A->row == B->row && A->col == B->col);
-  mat C = mat_new(A->row, A->col);
-  double value = 0;
-  for (int i=0; i<A->row; i++){
-    for(int j=0; j<A->col; j++){
-      value = mat_get(A,i,j) + s*mat_get(B,i,j);
-      mat_set(C,i,j,value);
+void mat_set_identity(mat* A){
+    for(int i=0;i<A->row;i++){
+	mat_set(A,i,i,1);
+	for(int j=i+1;j<A->col;j++){
+	    mat_set(A,i,j,0);
+	    mat_set(A,j,i,0);
+	}
     }
-  }
-  return C;
 }
 
-// C(m,k) = A(m,n) * B(n,k) 
-mat mat_mul(const mat A, const mat B){
-  assert(A->col == B->row && A->col > 0 && B->col > 0);
-  mat C = mat_new(A->row, B->col);
-  double value = 0;
+// A(m,n) = A(m,n) + s*B(m,n)
+void mat_add(mat* A, const mat* B, double s){
+  assert(A->row == B->row && A->col == B->col);
+  for (int i=0; i<A->row; i++)
+    for(int j=0; j<A->col; j++)
+      mat_set(A,i,j,mat_get(A,i,j) + s*mat_get(B,i,j));
+}
+
+// A(m,k) = A(m,n) * B(n,k) 
+void mat_mul(mat*C, const mat* A, const mat* B){
+  assert(A->col == B->row);
+  double sum;
   for (int i=0; i<A->row; i++){
-    for(int j=0; j<A->col; j++){
-      for(int k=0; k<B->row; k++){
-	value = mat_get(A,i,k)*mat_get(B,k,j);
-	mat_set(C,i,j,value);
+      for(int j=0; j<B->col; j++){
+	  sum = 0;
+	  for(int k=0; k<B->row; k++){
+	      sum +=  mat_get(A,i,k)*mat_get(B,k,j);
+	  }
+	mat_set(C,i,j,sum);
       }
-    }
   }
-  return C;
 }
 
-mat mat_prod(const mat A, const mat B){
-  // A(m,n).*B(m,n) = C(m,n)
-  assert(A->row == B->row && A->col == B->col);
-  mat C = mat_new(A->row, A->col);
-  double value = 0;
-  for (int i=0; i<A->row; i++){
-    for(int j=0; j<A->col; j++){
-	value = mat_get(A,i,j)*mat_get(B,i,j);
-	mat_set(C,i,j,value);
+// A(n,m) = A(m,n)'
+void mat_transpose(mat *A){
+    assert(A->col > 0 && A->row > 0);
+    for (int i=0; i<A->row; i++)
+	for(int j=0; j<A->col; j++)
+	    mat_set(A,j,i,mat_get(A,i,j));
+}
+
+// A(m,k) = A(n,m)^T x B(n,k)
+void mat_mul_T(mat* C, const mat* A, const mat* B){
+    assert (A->row == B->row);
+    double sum;
+    for (int i=0; i<A->col; i++){
+	for(int j=0; j<B->col; j++){
+	    sum = 0; 
+	    for(int k=0; k<B->row; k++){
+		sum += mat_get(A,k,i)*mat_get(B,k,j);	
+	    }
+	    mat_set(C,i,j,sum);
+	}
     }
-  }
-  return C;
 }
-
-vec mat_norm(const mat A, const char *type){
-	assert(A->row > 0 && A->col > 0);
-	vec v = vec_new(A->row);	
-	double norm = 0;
-	if (strcmp(type, "r") == 0){
-	  for(int i=0; i<A->row; i++){
-	    norm = 0;
-	    for(int j=0; j<A->col; j++){
-		norm += A->val[i][j]*A->val[i][j];
-	    }
-	    v->val[i] = sqrt(norm); 
-	  }
-	  return v;
-	}
-	if (strcmp(type, "c") == 0){
-	  for(int j=0; j<A->col; j++){
-	    norm = 0;
-	    for(int i=0; i<A->row; i++){
-		norm += A->val[i][j]*A->val[i][j];
-	    }
-	    v->val[j] = sqrt(norm); 
-	  }
-	  return v;
-	}
-	printf("Error in mat_norm \n");
-	return v;
-}
-
-
-
-
-

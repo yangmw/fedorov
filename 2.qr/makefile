@@ -1,5 +1,5 @@
 # Date created: 27 Apr 2013
-# Last Modified: 06 May 2013 (09:08:52)
+# Last Modified: 09 May 2013 (21:51:37)
 #
 # Brief: 
 # Input: 
@@ -9,7 +9,7 @@
 # Author:Yang Min Wang (ymwang@chem.au.dk)
 
 CC = cc             		               # Set compiler
-CFLAGS += -O3 -Wall -std=c99 -I/opt/local/include -I.        # Set compiler flags for C
+CFLAGS += -O3 -Wall --std=c99 -I/opt/local/include -I.        # Set compiler flags for C
 LDLIBS += -lm -L/opt/local/lib -lgsl -lgslcblas    # Extra libraries to link
 HOST = $(findstring ymwang, $(shell hostname)) # Am I on lifa?
 #GRAPH = $(/usr/users/fedorov/bin/graph)
@@ -28,8 +28,7 @@ clear_screen:
 
 # RUN 
 run: main test
-	./test
-	./main
+	./main	
 
 # Linking the main program
 main: main.o vector.o matrix.o qrdec.o
@@ -39,11 +38,16 @@ test: test.o vector.o matrix.o
 main.o: main.c
 test.o: test.c
 qrdec.o: qrdec.c 
+#matrix.o: matrix.c
+#vector.o: vector.c
 
 # Linking header files
-main.c: vector.h matrix.h qr.h
-test.c: vector.h matrix.h
-qrdec.c: vector.h matrix.h
+main.c:   vector.h matrix.h qr.h
+test.c:   vector.h matrix.h
+qrdec.c:  vector.h matrix.h
+#matrix.c: vector.h
+#vector.c: vector.h
+
 # Set read premissions using subshell (;)
 set_premissions:
 ifneq ($(HOST), ymwang ) 
