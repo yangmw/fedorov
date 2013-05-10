@@ -1,5 +1,5 @@
 # Date created: 27 Apr 2013
-# Last Modified: 09 May 2013 (21:51:37)
+# Last Modified: 10 May 2013 (00:09:32)
 #
 # Brief: 
 # Input: 
@@ -34,19 +34,14 @@ run: main test
 main: main.o vector.o matrix.o qrdec.o
 test: test.o vector.o matrix.o
 
-#	$(CC) -o main main.o linterp.o bsearch.o 
 main.o: main.c
 test.o: test.c
 qrdec.o: qrdec.c 
-#matrix.o: matrix.c
-#vector.o: vector.c
 
 # Linking header files
-main.c:   vector.h matrix.h qr.h
-test.c:   vector.h matrix.h
-qrdec.c:  vector.h matrix.h
-#matrix.c: vector.h
-#vector.c: vector.h
+#main.c:   vector.h matrix.h qrlib.h 
+#test.c:   vector.h matrix.h
+#qrdec.c:  vector.h matrix.h
 
 # Set read premissions using subshell (;)
 set_premissions:

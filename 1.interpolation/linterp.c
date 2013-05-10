@@ -1,5 +1,5 @@
 // Date created: 28 Apr 2013
-// Last Modified: 28 Apr 2013 (21:58:21)
+// Last Modified: 09 May 2013 (23:56:55)
 //
 // Brief: Linear spline interpolation algorithm 
 // Input: x[n],y[n], point z
@@ -10,8 +10,7 @@
 
 #include <stdio.h>
 #include <assert.h> 
-
-int binary_search(double z, double* x, double* y, int n);
+#include <intlib.h>
 
 double linterp(double z, double *x, double *y, int n){
 	//The must z value must be in the range x_0 <= z <= x_(n-1) 

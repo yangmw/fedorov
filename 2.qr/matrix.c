@@ -1,6 +1,6 @@
 // Filename: matrix.c
 // Date created: 05 May 2013
-// Last Modified: 09 May 2013 (22:49:05)
+// Last Modified: 10 May 2013 (00:13:59)
 //
 // Brief: Methods for matrix type structure
 // The matrix is of typedef mat with a column major structure

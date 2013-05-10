@@ -1,6 +1,6 @@
 // Filename: matrix.h
 // Date created: 05 May 2013
-// Last Modified: 09 May 2013 (22:34:49)
+// Last Modified: 09 May 2013 (23:54:10)
 //
 // Brief: Headerfile for matrix functions
 //

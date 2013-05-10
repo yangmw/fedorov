@@ -1,6 +1,6 @@
 # Filename: makefile
 # Date created: 27 Apr 2013
-# Last Modified: 30 Apr 2013 (16:15:53)
+# Last Modified: 10 May 2013 (16:25:24)
 #
 # Brief: makefile for the helloworld program 
 # Input: N/A
@@ -11,9 +11,8 @@
 
 CC = cc              # Set compiler
 CFLAGS = -O3 -Wall   # Set compiler flags for C
-#LDLIBS += -lm -lgc  # Extra libraries to link
+
 HOST = $(findstring ymwang, $(shell hostname)) # Am I on lifa?
-#GRAPH = $(/usr/users/fedorov/bin/graph)
 
 # Set default targets (for make)
 all: A B set_permissions 
@@ -34,10 +33,9 @@ out.B.txt: main
 # Linking the main program
 main: main.o hello.o user.o
 
+# These three lines may be omitted (Make will figure out)
 main.o: main.c
-
 hello.o: hello.c
-
 user.o: user.c
 
 # Set read premissions using subshell (;)
@@ -57,7 +55,8 @@ clean: cleanA cleanB
 cleanA: 
 	-rm -f hellouser out.A.txt
 cleanB: 
-	-rm -f main main.o hello.o user.o out.B.txt
+	-rm -f main out.B.txt
+	-rm -f *.o
 
 cheack: checkA checkB
 
@@ -76,15 +75,12 @@ checkB: out.B.txt
 	@rm -f correct.txt 
 
 backup: hello.tgz
-
-mail_zipfile: hello.tgz
-#'base64 $(shell pwd)/hello.tgz \
-#| mailx -s "hello backup" $(shell whoami)@phys.au.dk'
+	ssh $(shell whoami)@lifa.phys.au.dk \
+	'base64 $(shell pwd)/hello.tgz \
+	| mailx -s "hello backup" $(shell whoami)@phys.au.dk'
 
 hello.tgz: makefile $(shell ls *.c)
 	tar --create --gzip --file=hello.tgz makefile *.c
 	tar --list --file=hello.tgz
-
-
 
 	

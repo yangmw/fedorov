@@ -1,5 +1,5 @@
 // Date created: 29 Apr 2013
-// Last Modified: 09 May 2013 (23:16:08)
+// Last Modified: 10 May 2013 (00:16:08)
 //
 // Brief:
 // Input:
@@ -9,15 +9,17 @@
 // Original Author:
 // Author:Yang Min Wang (ymwang@chem.au.dk)
 
+// C library
 #include <stdio.h>
 #include <gsl/gsl_matrix.h>
-#include <matrix.h>
-#include <vector.h>
-#include <qr.h>
 #include <math.h>
 
-int m = 3;
-int n = 3;
+// QR library
+#include <qrlib.h>
+
+// Utility library
+#include <matrix.h>
+#include <vector.h>
 
 double in[3][3] = {
 	{  1,  -1,   4},
@@ -27,6 +29,8 @@ double in[3][3] = {
 
 int main (void){
     printf("Setting up Matrix A for QR-algorithm for square matrices...\n");
+    int m = 3;
+    int n = 3;
     int pre = 2;
     mat* A = mat_new(m,n);
     mat* Q = mat_new(m,m);

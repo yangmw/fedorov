@@ -1,6 +1,6 @@
 // Filename: qrdec.c
 // Date created: 05 May 2013
-// Last Modified: 09 May 2013 (22:48:55)
+// Last Modified: 10 May 2013 (00:12:43)
 //
 // Brief: QR decomposition algorithm using Gram-Schmidt orthogonalization
 // Input: Matrix A, Matrix R
@@ -29,7 +29,10 @@ void qrdec(mat* Q, mat *R, mat* A){
 	    //A is replaced with Q-matrix
 	    vec_add(colA(j), colA(i), -proj);	
 	    mat_set(R,i,j, proj);
+
+	    // Free memory
+	    //vec_free(colA(j));	
+	    //vec_free(colA(i));
 	}
     }
-    // Free matrix
 }

@@ -1,5 +1,5 @@
 // Date created: 28 Apr 2013
-// Last Modified: 28 Apr 2013 (23:31:28)
+// Last Modified: 10 May 2013 (15:59:50)
 //
 // Brief: Quadratic spline interpolation algorithm 
 // Input: n points (x,y) to be interpolated
@@ -11,28 +11,28 @@
 
 #include <stdlib.h>
 #include <assert.h>
-typedef struct {
-	int n;
-	double *x;
-	double *y;
-	double *b;
-	double *c;
-} Qspline;
+#include <intlib.h>
 
-int binary_search(double z, double *x, double *y, int n);
+//typedef struct {
+	//int n;
+	//double *x;
+	//double *y;
+	//double *b;
+	//double *c;
+//} qspline;
 
 //Brief: Constructs the quadratic spline structure
-Qspline* qspline_construct(int n, double *x, double *y){
+qspline* qspline_new(int n, double* x, double* y){
 	//Allocate memory for the Spline
-	Qspline *S = (Qspline *)malloc(sizeof(Qspline));
+	qspline* qs = (qspline* )malloc(sizeof(qspline));
 	//Allocate memory for the b coefficients
-	double *b = (double *)malloc(n*sizeof(double));
+	double* b = (double *)malloc(n*sizeof(double));
 	//Allocate memory for the c coefficients
-	double *c = (double *)malloc(n*sizeof(double));
+	double* c = (double *)malloc(n*sizeof(double));
 	//Allocate memory for the copy of x values
-	double *cp_x = (double*)malloc(n*sizeof(double));
+	double* cp_x = (double*)malloc(n*sizeof(double));
 	//Allocate memory for the copy of y values
-	double *cp_y = (double*)malloc(n*sizeof(double));
+	double* cp_y = (double*)malloc(n*sizeof(double));
 	//Allocate memory for the p coefficients
 	double p[n-1];	
 	//Allocate memory for Delta x
@@ -47,11 +47,11 @@ Qspline* qspline_construct(int n, double *x, double *y){
 	}
 
 	//Intialize the Qspline structure S
-	S->n = n; //(*S).n = n
-	S->x = cp_x;
-	S->y = cp_y;
-	S->b = b;
-	S->c = c;
+	qs->n = n; //(*S).n = n
+	qs->x = cp_x;
+	qs->y = cp_y;
+	qs->b = b;
+	qs->c = c;
 
 	//Calculate the p coefficients and Delta x
 	for(i=0; i<n-1; i++){
@@ -61,48 +61,46 @@ Qspline* qspline_construct(int n, double *x, double *y){
 
 	//Forward recursion for finding the c coefficents
 	c[0] = 0; //c_1 = 0
-	for(i=0; i<n-2; i++){
+	for(i=0; i<n-2; i++)
 		c[i+1] = (p[i+1]-p[i]-c[i]*dx[i])/dx[i+1];
-	}
-
+	
 	//Backward recursion for finding the c coefficents
 	c[n-2] = c[n-2]/2; // c_[n-1] = 1/2 c_[n-1]
-	for(i=n-3; i>=0; i--){
+
+	for(i=n-3; i>=0; i--)
 		c[i] = (p[i+1]-p[i]-c[i+1]*dx[i+1])/dx[i]; 
-	}
-
 	//Calculate the b coefficients
-	for(i=0; i<n-1; i++){
+	for(i=0; i<n-1; i++)
 		b[i] = p[i] - c[i]*dx[i];
-	}
-
-	return S;
-}
-
-//Brief: Free the allocated memory
-void qspline_free(Qspline *S){
-	free(S->x);
-	free(S->y);
-	free(S->b);
-	free(S->c);
-	free(S);
-}
-
-//Brief: Evaluate the points z S_i(z) and place it in the correct Spline i 
-double qspline_evaluate(Qspline *S, double z){	
-	int i = 0; 
-	double s = 0;
-	double h = 0;
-
-	//The must z value must be in the range x_0 <= z <= x_(n-1) 
-	assert (z >= S->x[0] && z <= S->x[S->n-1]);
 	
-	//Call to the binary search algorithm
-	i = binary_search(z, S->x, S->y, S->n);	
-	h = z-S->x[i]; 
-	s = S->y[i] + S->b[i]*h + S->c[i]*h*h;
+	return qs;
+}
 
+//Brief: Free allocated memory
+void qspline_free(qspline* qs){
+	free(qs->x);
+	free(qs->y);
+	free(qs->b);
+	free(qs->c);
+	free(qs);
+}
+
+//Brief: This function evaluate the points z S_i(z) and place it in the correct Spline S_i
+double qspline_get(qspline* qs, double z){	
+	//The must z value must be in the range x_0 <= z <= x_(n-1) 
+	assert (z >= qs->x[0] && z <= qs->x[qs->n-1]);
+		
+	int i = binary_search(z, qs->x, qs->y, qs->n);	
+	double h = z-qs->x[i]; 
+	double s = qs->y[i] + qs->b[i]*h + qs->c[i]*h*h;
 	return s;
 }
 
-
+//Brief: This function evaluate the derivate of the qspline at point z
+double qspline_deriv(qspline* qs, double z){
+	int i = binary_search(z, qs->x, qs->y, qs->n);
+	double h = z-qs->x[i]; 
+	//d/dx S_i(x) 
+	double s = qs->b[i]+2.0*qs->c[i]*h;  
+	return s;
+}
