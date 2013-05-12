@@ -1,5 +1,5 @@
 // Date created: 26 Apr 2013
-// Last Modified: 10 May 2013 (16:05:29)
+// Last Modified: 11 May 2013 (14:22:06)
 //
 // Brief: main program
 // Input: m points [x,y], n points for the interpolants
@@ -90,11 +90,9 @@ int main(int argc, char *argv[]){
 	    y[i] = sin(x[i]);
 	    fprintf(stderr," %2.6f %2.6f \n", x[i], y[i]);
 	}
-
 	x0 = x[0];
 	xn = x[dim-1];
 	h = (xn - x0)/steps;
-
 	//Quadratic spline interpolation 
 	s=0;
 	z=0;
@@ -107,8 +105,7 @@ int main(int argc, char *argv[]){
 		s = qspline_get(qs, z);
 		fprintf(stderr, "  %2.6f %2.6f \n", z, s);
 	}
-
-	//Derivative of the quadratic spline interpolatio
+	//Derivative of the quadratic spline interpolation
 	fprintf(stderr, "\n\n"); //New block (Gnuplot)
 	fprintf(stderr, "# x y (derivative of the qspline)\n");
 	for(int i = 0; i < steps; i++){
@@ -117,7 +114,15 @@ int main(int argc, char *argv[]){
 		s = qspline_deriv(qs, z);
 		fprintf(stderr," %2.6f %2.6f \n", z, s);
 	}
-
+	//Integration the quadratic spline interpolation
+	fprintf(stderr, "\n\n"); //New block (Gnuplot)
+	fprintf(stderr, "# x y (integration of the qspline)\n");
+	for(int i = 0; i < steps; i++){
+		//printf(stderr,"hello \n")s;
+	    	z = x0 + h*i;
+		s = qspline_int(qs, z);
+		fprintf(stderr," %2.6f %2.6f \n", z, s);
+	}
 	//Free memory
 	qspline_free(qs);
 	free(x);

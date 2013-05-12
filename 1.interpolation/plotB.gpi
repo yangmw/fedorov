@@ -1,6 +1,6 @@
 # Run with gnuplot version >= 4.6 
 # Date created: 27 Apr 2013
-# Last Modified: 10 May 2013 (15:12:21)
+# Last Modified: 11 May 2013 (12:23:29)
 
 # Brief: plot spline interpolations and polynomial interpolation
 # Input: splot.data
@@ -34,4 +34,5 @@ set title  "Interpolation"
 
 plot 'plotB.dat' index 0 with points pt 7 title "points", \
      ''          index 1 with lines  title "qspline interpolatio", \
-     ''          index 2 with lines  title "qspline derivative"
+     ''          index 2 with lines  title "qspline derivative", \
+     '' 	 index 3 with lines  title "qspline integration"

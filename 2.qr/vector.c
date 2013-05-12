@@ -1,6 +1,6 @@
 // Filename: vector.c
 // Date created: 30 Apr 2013
-// Last Modified: 09 May 2013 (22:06:43)
+// Last Modified: 12 May 2013 (23:11:00)
 //
 // Brief: Methods for the Vector type structure
 // Input: n elements 
@@ -51,6 +51,11 @@ double vec_get(const vec* v, const size_t idx){
     return v->val[idx*v->stride];
 }
 
+void vec_zero(vec* v){
+    for(int i=0; i<v->size; i++)
+	vec_set(v,i,0);
+}
+
 void vec_memcpy(const vec* dst, const vec* src){
     assert(dst->size == src->size);
     for(int i=0; i<src->size; i++)
@@ -75,6 +80,7 @@ void vec_scale(vec *v, const double scale){
 void vec_add(vec* v, const vec* u, double s){
     assert(u->size == v->size);
     double y = 0;
+
     for(int i=0; i<v->size; i++){
 	y = vec_get(v,i) + s*vec_get(u,i);
 	vec_set(v,i,y);

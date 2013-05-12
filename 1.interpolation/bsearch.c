@@ -1,5 +1,5 @@
 // Date created: 28 Apr 2013
-// Last Modified: 09 May 2013 (23:47:38)
+// Last Modified: 11 May 2013 (12:47:59)
 //
 // Brief: Binary search algorithm
 // Input: x[n],y[n], point z 
@@ -11,12 +11,12 @@
 #include <assert.h>
 #include <stdio.h>
 
-int binary_search(double z, double *x, double *y, int n){
+int binary_search(double z, double *x, int n){
 	int low_idx,high_idx,mid_idx;
 	low_idx = 0;	
 	high_idx = n - 1;
 
-	while(high_idx > low_idx + 1){
+	while(high_idx - low_idx > 1){
 		mid_idx = (low_idx + high_idx)/2;
 		if(z > x[mid_idx]){
 			low_idx = mid_idx;
@@ -25,5 +25,6 @@ int binary_search(double z, double *x, double *y, int n){
 			high_idx = mid_idx;
 		}
 	}
+	// x[low_idx] < z < x[high_idx] 
 	return low_idx;
 }

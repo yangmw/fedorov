@@ -1,6 +1,6 @@
 // Filename: vector.h
 // Date created: 30 Apr 2013
-// Last Modified: 09 May 2013 (18:40:50)
+// Last Modified: 12 May 2013 (22:13:48)
 //
 // Brief: Header file for the vector structure
 // Input: number of elements
@@ -24,6 +24,7 @@ typedef struct {
 vec* vec_new(size_t n);
 void vec_free(vec* v);
 double vec_get(const vec* v, const size_t idx);
+void vec_zero(vec* v);
 void vec_set(vec* v, const size_t idx, double val); 
 void vec_print(vec* v, int precision);
 void vec_memcpy(const vec* dst, const vec* src);

@@ -1,6 +1,6 @@
 // Filename: test.C
 // Date created: 03 May 2013
-// Last Modified: 09 May 2013 (22:01:24)
+// Last Modified: 12 May 2013 (19:34:10)
 //
 // Brief: Testfile to see that vector.h functions is working
 // Input: N/A
@@ -13,7 +13,6 @@
 #include <vector.h>
 #include <matrix.h>
 #include <string.h>
-#define colA(i) mat_get_col(A,i)
 
 double inA[2][3] = {
 	{  1, -5,  4},
@@ -77,10 +76,9 @@ int main(){
     }
 
     printf("Get colum 1 from matrix A: \n");
-    //mat_get_col(ck, A, 1);
-
     for(int i=0; i<dim; i++){
-	vec_print(colA(i), pre);
+	mat_get_col(u,A,i);		
+	vec_print(u, pre);
     }
 
     //vec_print(colA(ck,1), "r", 1);

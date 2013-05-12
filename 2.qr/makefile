@@ -1,5 +1,5 @@
 # Date created: 27 Apr 2013
-# Last Modified: 10 May 2013 (00:09:32)
+# Last Modified: 12 May 2013 (23:28:49)
 #
 # Brief: 
 # Input: 
@@ -8,11 +8,14 @@
 # License:copyleft
 # Author:Yang Min Wang (ymwang@chem.au.dk)
 
-CC = cc             		               # Set compiler
-CFLAGS += -O3 -Wall --std=c99 -I/opt/local/include -I.        # Set compiler flags for C
-LDLIBS += -lm -L/opt/local/lib -lgsl -lgslcblas    # Extra libraries to link
-HOST = $(findstring ymwang, $(shell hostname)) # Am I on lifa?
-#GRAPH = $(/usr/users/fedorov/bin/graph)
+# Set compiler
+CC = cc      
+# Set compiler flags for C
+CFLAGS += -O3 -Wall --std=c99 -I/opt/local/include -I. -I$(HOME)/include/gc-7.2  
+# Extra libraries to link
+LDLIBS += -lm -L/opt/local/lib -lgsl -lgslcblas -L$(HOME)/include/gc-7.2  
+# Am I on lifa?
+HOST = $(findstring ymwang, $(shell hostname)) 
 
 # Set default target (for make)
 all: clear_screen clean run set_premissions 
@@ -23,20 +26,18 @@ clear_screen:
 	clear 
 	clear
 
-#qr: main 
-	#./main
-
-# RUN 
+# Run 
 run: main test
 	./main	
 
 # Linking the main program
-main: main.o vector.o matrix.o qrdec.o
-test: test.o vector.o matrix.o
+main: main.o vector.o matrix.o qrdec.o qrback.o qrdet.o
+test: test.o vector.o matrix.o qrdec.o qrback.o qrdet.o
 
-main.o: main.c
-test.o: test.c
-qrdec.o: qrdec.c 
+# Makefile will do this automatically
+#main.o: main.c
+#test.o: test.c
+#qrdec.o: qrdec.c 
 
 # Linking header files
 #main.c:   vector.h matrix.h qrlib.h 
@@ -54,10 +55,9 @@ endif
 
 # Target clean all
 clean: 
-	@rm -f main main.o vector.o matrix.o qrdec.o
-	@rm -f test test.o
+	@rm -f main test 
+	@rm -f *.o 
 	@echo Clean done
-
 
 backup: qr.tgz
 

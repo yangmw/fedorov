@@ -1,6 +1,6 @@
 // Filename: matrix.h
 // Date created: 05 May 2013
-// Last Modified: 09 May 2013 (23:54:10)
+// Last Modified: 12 May 2013 (22:39:57)
 //
 // Brief: Headerfile for matrix functions
 //
@@ -13,6 +13,9 @@
 #endif
 #include <vector.h>
 
+//Include garbage collector
+//#include <gc.h>
+
 #ifndef MATRIX_H
 
 typedef struct {
@@ -24,11 +27,12 @@ typedef struct {
 
 mat* mat_new(size_t row, size_t col);
 void mat_free(mat* A);
-double mat_get(mat* A, int idx, int idy);
+double mat_get(const mat* A, int idx, int idy);
 void mat_set(mat* A, int idx, int idy, double value);
 void mat_set_idenity(mat* A);
 
-vec* mat_get_col(const mat* A, const int col);
+void mat_get_col(vec* c, const mat* A, const int col);
+void mat_set_col(mat* A, const vec* c, const int col);
 
 void mat_print(mat* A, int precision);
 void mat_memcpy(mat* dst, const mat* src);
@@ -36,6 +40,9 @@ void mat_memcpy(mat* dst, const mat* src);
 void mat_add(mat* A, const mat* B, double s);
 void mat_mul(mat* C, const mat* A, const mat* B);
 void mat_mul_T(mat* C, const mat* A, const mat* B);
+void mat_mul_vec(vec* c, const mat* A, const vec* b);
+void mat_mul_vec_T(vec* c, const mat* A, const vec* b);
+
 void mat_transpose(mat* A);
 
 double mat_det(const mat* A);
