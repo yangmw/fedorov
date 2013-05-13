@@ -1,5 +1,5 @@
 # Date created: 27 Apr 2013
-# Last Modified: 12 May 2013 (23:28:49)
+# Last Modified: 13 May 2013 (09:28:51)
 #
 # Brief: 
 # Input: 
@@ -11,7 +11,8 @@
 # Set compiler
 CC = cc      
 # Set compiler flags for C
-CFLAGS += -O3 -Wall --std=c99 -I/opt/local/include -I. -I$(HOME)/include/gc-7.2  
+CFLAGS += -O3 -Wall --std=c99 -I/opt/local/include -I. -I$(HOME)/include/gc-7.2 \
+	  -I/usr/users/fedorov/include -I/usr/users/fedorov/lib
 # Extra libraries to link
 LDLIBS += -lm -L/opt/local/lib -lgsl -lgslcblas -L$(HOME)/include/gc-7.2  
 # Am I on lifa?

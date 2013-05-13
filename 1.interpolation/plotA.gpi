@@ -1,0 +1,38 @@
+# Run with gnuplot version >= 4.6 
+# Date created: 27 Apr 2013
+# Last Modified: 10 May 2013 (14:48:49)
+
+# Brief: plot spline interpolations and polynomial interpolation
+# Input: splot.data
+# Output: plot.svg
+
+# License:copyleft
+# Author:Yang Min Wang (ymwang@chem.au.dk)
+
+reset
+
+#set border linewidth 1
+#unset key
+
+#set key auto
+
+#get autoscale
+set terminal svg size 800 600 fname 'Helvetica' fsize 14
+set output 'plotA.svg'
+
+#set style line 1 lt 1 lw 2 pt 7 ps 1     # --- blue
+#set style line 3 lt 1 lw 2 pt 7 ps 1     # --- red
+#set style line 5 lt 1 lw 2 pt 7 ps 1     # --- green
+
+#set style line 2 lc rgb '#FF0000' lt 1 lw 2 pt 7 ps 1     # --- red  
+#set style line 4 lc rgb '#008000' lt 1 lw 2 pt 7 ps 1     # --- green	
+#set style line 6 lc rgb '#FFC0CB' lt 4 lw 2 pt 7 ps 1     # --- pink
+
+set xlabel "x"
+set ylabel "y"
+set title  "Interpolation"
+
+plot 'plotA.dat' index 0 with points pt 7 title "points", \
+     ''          index 1 with lines  title "polynomial", \
+     ''          index 2 with lines  title "linear spline", \
+     ''          index 3 with lines  title "quadratic spline"
