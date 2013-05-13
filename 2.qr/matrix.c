@@ -1,6 +1,6 @@
 // Filename: matrix.c
 // Date created: 05 May 2013
-// Last Modified: 12 May 2013 (22:42:05)
+// Last Modified: 13 May 2013 (09:30:56)
 //
 // Brief: Methods for matrix type structure
 // The matrix is of typedef mat with a column major structure
@@ -26,7 +26,7 @@
 #include <string.h>
 
 // Include garbage collector
-//#include <gc.h>
+#include <gc.h>
 
 typedef struct {
 	size_t row;
