@@ -1,0 +1,21 @@
+# Filename: plot.gpi
+# Date created: 13 May 2013
+# Last Modified: 13 May 2013 (12:10:04)
+
+# Brief:
+# Input:
+# Output:
+
+# License: copyleft
+# Author: Yang Min Wang (ymwang@chem.au.dk)
+
+
+set terminal svg size 800 600 fname 'Helvetica' fsize 14
+set output 'plot.svg'
+
+set title "Cavendish Data"
+set xlabel "Time (s)"
+set ylabel "Angle (mrad)"
+
+plot "cavendish.data" using 1:2:3 with yerrorbars lt 7 ps 0.5    
+#plot "cavendish.data" with yerrorbars title "cavendish"
