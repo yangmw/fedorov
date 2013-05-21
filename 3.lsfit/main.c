@@ -1,6 +1,6 @@
 // Filename: main.c
 // Date created: 13 May 2013
-// Last Modified: 13 May 2013 (12:47:27)
+// Last Modified: 13 May 2013 (13:13:05)
 //
 // Brief: 
 // Input:
@@ -23,6 +23,15 @@ double fRand(double fMin, double fMax){
 }
 
 double f(double x){return 1.0+2.0*x+3.0*x*x;}
+
+double fit_functions(int i, double x){
+   switch(i){
+   case 0: return 1.0; break;
+   case 1: return x;   break;
+   case 2: return x*x; break;
+   default: {fprintf(stderr,"funs: wrong i:%d",i); return NAN;}
+   }
+}
 
 int main(int argc, char** argv){
     srand(time(NULL));

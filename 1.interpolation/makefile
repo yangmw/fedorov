@@ -1,5 +1,5 @@
 # Date created: 27 Apr 2013
-# Last Modified: 13 May 2013 (11:08:45)
+# Last Modified: 21 May 2013 (12:37:40)
 #
 # Brief: "make" will compile and run a linear interpolation of 
 # a given data set which will be produced from "main.c" and read
@@ -27,14 +27,14 @@ run: main
 	./main 1> plotA.dat 2> plotB.dat 
 
 # Linking the main program
-main: main.o polinterp.o linterp.o qspline.o bsearch.o 
+main: main.o polinterp.o linterp.o cspline.o qspline.o bsearch.o 
 
 # Linking with header files
 main.c:   intlib.h
 linter.c: intlib.h
 qsline.c: intlib.h
+cspline.c: intlib.h
 
-# Set read premissions using subshell (;)
 set_permissions:
 ifneq ($(HOST), ymwang-MBPro.local ) 
 	@(cd ../../../; chmod -R go+xr public_html)
@@ -43,9 +43,6 @@ else
 	@echo No Permissions set
 endif
 
-##########################################################
-
-# Target clean all
 clean: 
 	@rm -f main 
 	@rm -f *.o

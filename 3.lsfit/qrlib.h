@@ -1,6 +1,6 @@
 // Filename: qr.h
 // Date created: 06 May 2013
-// Last Modified: 12 May 2013 (23:29:28)
+// Last Modified: 13 May 2013 (13:13:57)
 //
 // Brief: Headerfile to all the QR-algorithm routines
 // Input:
@@ -20,7 +20,6 @@
 void qrdec(mat* Q, mat* R);
 void qrback(vec* x, const mat* Q, const mat* R, const vec* b);
 double qr_abs_det(mat* R);
-
 
 #define QRLIB_H
 #endif

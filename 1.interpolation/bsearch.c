@@ -1,5 +1,5 @@
 // Date created: 28 Apr 2013
-// Last Modified: 11 May 2013 (12:47:59)
+// Last Modified: 17 May 2013 (09:27:10)
 //
 // Brief: Binary search algorithm
 // Input: x[n],y[n], point z 

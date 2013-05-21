@@ -1,6 +1,6 @@
 // Filename: vector.c
 // Date created: 30 Apr 2013
-// Last Modified: 12 May 2013 (23:11:00)
+// Last Modified: 13 May 2013 (13:30:20)
 //
 // Brief: Methods for the Vector type structure
 // Input: n elements 
@@ -95,6 +95,12 @@ double vec_dot(const vec* u, const vec* v){
 	s = s + vec_get(u,i)*vec_get(v,i);
     }
     return s;
+}
+//v = v/u
+void vec_div(vec* v, const vec* u){
+    assert(v->size == u->size);
+    for(int i=0; i<v->size; i++)
+    	vec_set(v,i,vec_get(v,i)/vec_get(u,i));
 }
 
 //||v||

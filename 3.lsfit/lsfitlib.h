@@ -1,6 +1,6 @@
 // Filename: lsfitlib.h
 // Date created: 06 May 2013
-// Last Modified: 13 May 2013 (09:01:37)
+// Last Modified: 13 May 2013 (13:31:53)
 //
 // Brief: Headerfile to all the least square fit routines
 //
@@ -12,11 +12,11 @@
 //Include garbage collector
 //#include <gc.h>
 
-#ifndef QRLIB_H
+#ifndef LSFITLIB_H
 
 /*void qrdec(mat* Q, mat* R);*/
 /*void qrback(vec* x, const mat* Q, const mat* R, const vec* b);*/
 /*double qr_abs_det(mat* R);*/
 
-#define QRLIB_H
+#define LSFITLIB_H
 #endif
