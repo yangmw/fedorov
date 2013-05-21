@@ -1,5 +1,5 @@
 # Date created: 27 Apr 2013
-# Last Modified: 21 May 2013 (12:37:40)
+# Last Modified: 21 May 2013 (16:21:40)
 #
 # Brief: "make" will compile and run a linear interpolation of 
 # a given data set which will be produced from "main.c" and read
@@ -21,6 +21,7 @@ all: clean run makeplots set_permissions
 	@echo Run completed successfully 
 
 makeplots:
+	@rm -f *.o
 	gnuplot plotA.gpi plotB.gpi
 
 run: main
