@@ -1,5 +1,5 @@
 # Date created: 27 Apr 2013
-# Last Modified: 06 Jun 2013 (17:20:58)
+# Last Modified: 10 Jun 2013 (00:46:24)
 #
 # Brief: "make" will compile and run a linear interpolation of 
 # a given data set which will be produced from "main.c" and read
@@ -22,10 +22,10 @@ all: clean run makeplots set_permissions
 
 makeplots:
 	@rm -f *.o
-	gnuplot plotA.gpl plotB.gpl
+	gnuplot plotA.gpl plotBC.gpl
 
 run: main
-	./main 1> plotA.dat 2> plotB.dat 
+	./main 1> plotA.dat 2> plotBC.dat 
 
 # Linking the main program
 main: main.o polinterp.o linterp.o cspline.o qspline.o bsearch.o 
@@ -41,8 +41,8 @@ endif
 clean: 
 	@rm -f main 
 	@rm -f *.o
-	@rm -f plotA.dat plotB.dat
-	@rm -f plotA.svg plotB.svg
+	@rm -f *.dat
+	@rm -f *.svg
 	@echo Clean done
 
 backup: interpolation.tgz

@@ -1,5 +1,5 @@
 // Date created: 26 Apr 2013
-// Last Modified: 10 Jun 2013 (00:41:32)
+// Last Modified: 10 Jun 2013 (00:47:43)
 //
 // Brief: Main program
 // Input: m points [x,y], n points for the interpolants
@@ -15,7 +15,7 @@
 
 // Interpolation library 
 #include <lib.h>
-#define M_PI 3.14159265358979323846
+#define PI 3.14159265358979323846
 
 int main(int argc, char *argv[]){ 
 	// Number of points to be fitted with a given spline 
@@ -78,7 +78,7 @@ int main(int argc, char *argv[]){
 	//Input for the derivatives and integrals
 	fprintf(stderr, "# x y (points)\n");
 	for(int i = 0 ;i<dim; i++){ 
-	    x2[i] = i*2*M_PI/(dim-1);
+	    x2[i] = i*2*PI/(dim-1);
 	    y2[i] = sin(x2[i]);
 	    fprintf(stderr," %2.6f %2.6f \n", x2[i], y2[i]);
 	}
