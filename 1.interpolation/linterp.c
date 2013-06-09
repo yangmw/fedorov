@@ -1,5 +1,5 @@
 // Date created: 28 Apr 2013
-// Last Modified: 11 May 2013 (12:50:31)
+// Last Modified: 06 Jun 2013 (17:18:43)
 //
 // Brief: Linear spline interpolation algorithm 
 // Input: x[n],y[n], point z
@@ -10,7 +10,7 @@
 
 #include <stdio.h>
 #include <assert.h> 
-#include <intlib.h>
+#include <lib.h>
 
 double linterp(double z, double *x, double *y, int n){
 	//The must z value must be in the range x_0 <= z <= x_(n-1) 

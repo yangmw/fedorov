@@ -1,5 +1,5 @@
 // Date created: 28 Apr 2013
-// Last Modified: 21 May 2013 (15:13:33)
+// Last Modified: 06 Jun 2013 (17:18:58)
 //
 // Brief: Quadratic spline interpolation algorithm 
 // Input: n points (x,y) to be interpolated
@@ -13,7 +13,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <assert.h>
-#include <intlib.h>
+#include <lib.h>
 
 // Brief: Allocate memory and construct the quadratic spline
 qspline* qspline_new(int n, double* x, double* y){

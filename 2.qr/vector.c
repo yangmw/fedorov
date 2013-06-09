@@ -1,6 +1,6 @@
 // Filename: vector.c
 // Date created: 30 Apr 2013
-// Last Modified: 12 May 2013 (23:11:00)
+// Last Modified: 07 Jun 2013 (12:50:11)
 //
 // Brief: Methods for the Vector type structure
 // Input: n elements 
@@ -10,14 +10,15 @@
 // Original Author: Dimitri Fedorov (fedorov@phys.au.dk)
 // Author:Yang Min Wang (ymwang@chem.au.dk)
 
+#ifndef VECTOR_H
+#define VECTOR_H
+
 #include <assert.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdbool.h>
 #include <math.h>
 #include <string.h>
-
-#define VECTOR_H
 
 typedef struct {
     size_t size;
@@ -37,7 +38,7 @@ vec* vec_new(size_t n){
 
 void vec_free(vec* v){
     assert(v->owner); 
-    free(v->val); 
+    free(v->val);
     free(v);
 }
 
@@ -67,6 +68,7 @@ void vec_print(vec* v, int pre){
 	for(int i=0; i<v->size; i++){
 	    printf("  %*.*f", pre*4, pre, vec_get(v,i));
 	}
+	printf("\n");
 	printf("\n");
 }
 
@@ -104,3 +106,5 @@ double vec_norm(const vec* v){
     norm = sqrt(vec_dot(v,v));
     return norm;
 }
+
+#endif /* VECTOR_H */

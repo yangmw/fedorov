@@ -1,5 +1,5 @@
 // Date created: 26 Apr 2013
-// Last Modified: 21 May 2013 (15:15:07)
+// Last Modified: 06 Jun 2013 (17:18:34)
 //
 // Brief: Main program
 // Input: m points [x,y], n points for the interpolants
@@ -14,7 +14,7 @@
 #include <stdlib.h>
 
 // Interpolation library 
-#include <intlib.h>
+#include <lib.h>
 
 int main(int argc, char *argv[]){ 
 	// Number of points to be fitted with a given spline 

@@ -1,9 +1,7 @@
 # Date created: 27 Apr 2013
-# Last Modified: 13 May 2013 (09:39:11)
+# Last Modified: 08 Jun 2013 (17:41:47)
 #
 # Brief: 
-# Input: 
-# Output:
 # 
 # License:copyleft
 # Author:Yang Min Wang (ymwang@chem.au.dk)
@@ -27,23 +25,20 @@ clear_screen:
 	clear 
 	clear
 
-# Run 
-run: main test
-	./main	
+# Run the main program
+run: main 
+	./main
+
+# Testing the QR algorithm:
+test: clear_screen clean runtest set_premissions
+#./runtest > test.out 
+	./runtest
+	@echo Test compiled and ended successfully 
+
 
 # Linking the main program
-main: main.o vector.o matrix.o qrdec.o qrback.o qrdet.o
-test: test.o vector.o matrix.o qrdec.o qrback.o qrdet.o
-
-# Makefile will do this automatically
-#main.o: main.c
-#test.o: test.c
-#qrdec.o: qrdec.c 
-
-# Linking header files
-#main.c:   vector.h matrix.h qrlib.h 
-#test.c:   vector.h matrix.h
-#qrdec.c:  vector.h matrix.h
+main: main.o vector.o matrix.o qrdec.o qrback.o qrdet.o inverse.o lib.o
+runtest: vector.o matrix.o qrdec.o qrback.o qrdet.o inverse.o lib.o
 
 # Set read premissions using subshell (;)
 set_premissions:
@@ -56,13 +51,9 @@ endif
 
 # Target clean all
 clean: 
-	@rm -f main test 
-	@rm -f *.o 
+	@rm -f main runtest 
+	@rm -f *.o
+	@rm -f *.dat
+	@rm -f *.out	
 	@echo Clean done
 
-backup: qr.tgz
-
-qr.tgz: makefile $(shell ls *.c)
-	@tar --create --gzip --file=qr.tgz makefile plot.gpi *.c
-	@tar --list --file=qr.tgz
-	@echo Backup done

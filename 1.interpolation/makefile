@@ -1,5 +1,5 @@
 # Date created: 27 Apr 2013
-# Last Modified: 21 May 2013 (16:21:40)
+# Last Modified: 06 Jun 2013 (17:20:58)
 #
 # Brief: "make" will compile and run a linear interpolation of 
 # a given data set which will be produced from "main.c" and read
@@ -22,19 +22,13 @@ all: clean run makeplots set_permissions
 
 makeplots:
 	@rm -f *.o
-	gnuplot plotA.gpi plotB.gpi
+	gnuplot plotA.gpl plotB.gpl
 
 run: main
 	./main 1> plotA.dat 2> plotB.dat 
 
 # Linking the main program
 main: main.o polinterp.o linterp.o cspline.o qspline.o bsearch.o 
-
-# Linking with header files
-main.c:   intlib.h
-linter.c: intlib.h
-qsline.c: intlib.h
-cspline.c: intlib.h
 
 set_permissions:
 ifneq ($(HOST), ymwang-MBPro.local ) 

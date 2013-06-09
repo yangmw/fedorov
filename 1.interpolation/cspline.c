@@ -1,6 +1,6 @@
 // Filename: cspline.c
 // Date created: 16 May 2013
-// Last Modified: 21 May 2013 (16:06:07)
+// Last Modified: 06 Jun 2013 (17:18:49)
 //
 // Brief: Cubic spline interpolation algorithm 
 // 
@@ -14,7 +14,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <assert.h>
-#include <intlib.h>
+#include <lib.h>
 
 cspline* cspline_new(int n, double* x, double* y) {
     // Allocate memory for the type cspline 

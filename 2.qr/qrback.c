@@ -1,6 +1,6 @@
 // Filename: qrbak.c
 // Date created: 12 May 2013
-// Last Modified: 13 May 2013 (13:24:01)
+// Last Modified: 08 Jun 2013 (15:29:13)
 //
 // Brief: QR-backsubstituion Algorithm
 // Solves the equation QRx = b
@@ -12,7 +12,7 @@
 // Original Author: Dimitri Fedorov (fedorov@phys.au.dk)
 // Author: Yang Min Wang (ymwang@chem.au.dk)
 
-#include <../include/matrix.h>
+#include <matrix.h>
 #include <assert.h>
 
 //Brief: Solving Ux = y, U is a upper triangular matrix
