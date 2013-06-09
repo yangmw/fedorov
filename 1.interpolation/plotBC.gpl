@@ -1,0 +1,40 @@
+# Run with gnuplot version >= 4.6 
+# Date created: 27 Apr 2013
+# Last Modified: 21 May 2013 (16:27:03)
+
+# Brief: plot spline interpolations and polynomial interpolation
+# Input: splot.data
+# Output: plot.svg
+
+# License:copyleft
+# Author:Yang Min Wang (ymwang@chem.au.dk)
+
+reset
+#set key left top
+
+set terminal svg size 800 600 fname 'Helvetica' fsize 14 dashed 
+set output 'plotBC.svg'
+
+set xlabel "x"
+set ylabel "y"
+set title  "B. and C. - Interpolation, Derivation and Integration"
+
+set style line 5 lt 2 lc rgb "pink" lw 3
+set style line 6 lt 2 lc rgb "green" lw 2
+set style line 7 lt 2 lc rgb "blue" lw 3
+set style line 8 lt 2 lc rgb "brown" lw 2
+
+set style line 1 lt -1 linecolor rgb "red"
+set style line 2 lt -1 linecolor rgb "navy"
+set style line 3 lt -1 linecolor rgb "yellow"
+set style line 4 lt -1 linecolor rgb "magenta"
+
+#plot 'plotB.dat' using 1:2 with lines
+
+plot 'plotBC.dat' index 0 u 1:2 w p pt 7 title "points", \
+     ''          index 1 u 1:2 w l title "quadratic interpolation", \
+     ''          index 2 u 1:2 w l ls 1 title "quadratic derivative", \
+     '' 	 index 3 u 1:2 w l ls 6 title "quardratic integration ", \
+     '' 	 index 4 u 1:2 w l ls 2 title "cubic derivative", \
+     '' 	 index 5 u 1:2 w l ls 4 title "cubic integration"
+
