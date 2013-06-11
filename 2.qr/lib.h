@@ -1,6 +1,6 @@
 // Filename: qr.h
 // Date created: 06 May 2013
-// Last Modified: 08 Jun 2013 (15:53:29)
+// Last Modified: 10 Jun 2013 (11:10:58)
 //
 // Brief: Headerfile to all the QR-algorithm routines
 // Input:
@@ -11,6 +11,8 @@
 // Author: Yang Min Wang (ymwang@chem.au.dk)
 #include <matrix.h>
 #include <vector.h>
+#include <gsl/gsl_linalg.h>
+#include <gsl/gsl_cblas.h>
 
 //Include garbage collector
 //#include <gc.h>
@@ -23,6 +25,8 @@ void qrback(vec* x, const mat* Q, const mat* R, const vec* b);
 void qr_inv(mat* IA);
 double qr_abs_det(mat* R);
 void title(char *s);
+void mat_print_gsl(gsl_matrix* A_gsl, const int pre);
+void vec_print_gsl(gsl_vector* v_gsl, int precision);
 
 #define LIB_H
 #endif

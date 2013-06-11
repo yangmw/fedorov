@@ -1,6 +1,6 @@
 // Filename: test.C
 // Date created: 03 May 2013
-// Last Modified: 08 Jun 2013 (17:43:07)
+// Last Modified: 11 Jun 2013 (12:54:23)
 //
 // Brief: Testfile to see that vector.h functions is working
 // Input: N/A
@@ -15,9 +15,13 @@
 #include <matrix.h>
 #include <string.h>
 #include <stdlib.h>
+#include <gsl/gsl_linalg.h>
+#include <gsl/gsl_cblas.h>
 
 #include <lib.h>
 #define RND_MAX 10
+#define NT CblasNoTrans
+#define T CblasTrans
 
 double p[3][3] = { {1, 3, -4}, {1, 1, -2}, {-1, -2, 5} };
 double q[3] = {1,2,3};
@@ -60,24 +64,18 @@ int main(){
     title("Testing QR Algorithm...");
     printf("Matrix A:\n");
     mat_print(A, pre);
-   
     mat_memcpy(Q,A);
     qrdec(Q, R);
-
     printf("Matrix R: \n");
     mat_print(R, pre); 
-
     printf("Matrix Q: \n");
     mat_print(Q, pre);
-
     printf("Matrix Q^T*Q: \n");
     mat_mul_AT(C, Q, Q);
     mat_print(C, pre);
-
     printf("Matrix Q*Q^T: \n");
     mat_mul_BT(C, Q, Q);
     mat_print(C, pre);
-
     printf("Matrix Q*R: \n");
     mat_mul(C, Q, R);
     mat_print(C, pre);
@@ -86,17 +84,13 @@ int main(){
     title("Testing Ax = b solver...");
     printf("Matrix A:\n");
     mat_print(A, pre);
-
     printf("Vector b:\n");
     vec_print(b, pre);
     qrback(x, Q, R, b); 
-   
     printf("Vector x: \n");
     vec_print(x, pre);
-
     printf("Matrix A:\n");
     mat_print(A, pre);
-
     printf("Vector Ax:\n");
     mat_mul_vec(c, A, x);
     vec_print(c, pre);
@@ -105,26 +99,66 @@ int main(){
     title("Testing the inverse of matrix A...");
     printf("Matrix A:\n");
     mat_print(A, pre);
-    
     mat_memcpy(invA, A);
     qr_inv(invA);
-    
     printf("Matrix inv(A):\n");
     mat_print(invA, pre);
-
     printf("Matrix inv(A)*A:\n");
     mat_mul(C,invA,A);
     mat_print(C, pre);
-
     printf("Matrix A*inv(A):\n");
     mat_mul(C,A,invA);
     mat_print(C, pre);
 
+    // Testing GSL QR-algorithm...
+    title("Testing Ax = b for GSL...");
+    gsl_matrix* A_gsl = gsl_matrix_alloc(dim, dim);
+    gsl_matrix* Q_gsl = gsl_matrix_alloc(dim, dim);
+    gsl_matrix* C_gsl = gsl_matrix_alloc(dim, dim);
+    gsl_vector* b_gsl = gsl_vector_alloc(dim);
+    A_gsl->data = p; //Pointing gsl objects to values
+    gsl_matrix_memcpy (Q_gsl, A_gsl);
+    b_gsl->data = q;
+    printf("Matrix A_gsl:\n");
+    mat_print_gsl(A_gsl, pre);
+    printf("Vector b_gsl:\n");
+    vec_print_gsl(b_gsl, pre);
+
+    gsl_vector *tau_gsl = gsl_vector_alloc(dim);
+    gsl_vector *x_gsl = gsl_vector_alloc(dim);
+    gsl_vector *c_gsl = gsl_vector_alloc(dim);
+
+    gsl_linalg_QR_decomp(Q_gsl, tau_gsl);
+    printf("Matrix Q_gsl:\n");
+    mat_print_gsl(Q_gsl, pre);
+    printf("Matrix Q_gsl^T*Q_gsl:\n");
+    gsl_blas_dgemm(T, NT, 1.0, Q_gsl, Q_gsl, 0.0, C_gsl);
+    gsl_linalg_QR_solve(Q_gsl, tau_gsl, b_gsl, x_gsl);
+    mat_print_gsl(C_gsl, pre);
+    printf("Vector x_gsl:\n");
+    vec_print_gsl(x_gsl, pre);
+    
+    //Matrix vector multiplication c = a*A*x + b*y 
+    gsl_blas_dgemv(NT, 1.0, A_gsl, x_gsl, 0.0, c_gsl);
+    printf("Vector A_gsl*x_gsl:\n");
+    vec_print_gsl(c_gsl, pre);
+
     //Free memory
+    gsl_vector_free(c_gsl);
+    gsl_vector_free(b_gsl);
+    gsl_vector_free(tau_gsl);
+    gsl_vector_free(x_gsl);
+    gsl_matrix_free(A_gsl);
+    gsl_matrix_free(Q_gsl);
+    gsl_matrix_free(C_gsl);
+
     mat_free(A);
     mat_free(Q);
     mat_free(R);
+    mat_free(invA);
     vec_free(b);
     vec_free(c);
     vec_free(x);
+
+    return 0;
 }

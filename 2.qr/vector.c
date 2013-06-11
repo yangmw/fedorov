@@ -1,6 +1,6 @@
 // Filename: vector.c
 // Date created: 30 Apr 2013
-// Last Modified: 07 Jun 2013 (12:50:11)
+// Last Modified: 11 Jun 2013 (11:39:16)
 //
 // Brief: Methods for the Vector type structure
 // Input: n elements 
@@ -105,6 +105,12 @@ double vec_norm(const vec* v){
     double norm = 0;
     norm = sqrt(vec_dot(v,v));
     return norm;
+}
+
+void vec_comp(double sum, const vec* v, const vec* w){
+    assert(v->size == w->size);
+    for(int i=0; i<v->size; i++)
+	sum += vec_get(v,i)-vec_get(w,i);
 }
 
 #endif /* VECTOR_H */

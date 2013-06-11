@@ -1,6 +1,6 @@
 // Filename: matrix.c
 // Date created: 05 May 2013
-// Last Modified: 08 Jun 2013 (16:13:01)
+// Last Modified: 10 Jun 2013 (13:22:42)
 //
 // Brief: Methods for matrix type structure
 // The matrix is of typedef mat with a column major structure
@@ -97,7 +97,7 @@ void mat_set_id(mat* A){
 		}
 }
 
-void mat_print(const mat* A, int pre){
+void mat_print(const mat* A, const int pre){
   assert(A->row > 0 && A->col > 0);
   assert(pre < 18 && pre > 0);
   for(int i=0; i<A->row; i++){
@@ -188,7 +188,6 @@ void mat_mul_vec(vec* c, const mat* A, const vec* b){
   }
 }
 
-
 // x(m) = A(n,m)^T x b(n)
 void mat_mul_vec_T(vec*c, const mat* A, const vec* b){
     assert(A->row == b->size);
@@ -201,4 +200,12 @@ void mat_mul_vec_T(vec*c, const mat* A, const vec* b){
 	vec_set(c,i,sum);
 	}
 }
+
+void mat_check(double sum, const mat* A, const mat* B){
+    assert(A->row == B->row && A->col == B->col);	
+    for(int i=0;i<B->row;i++)
+	for(int j=0;j<B->col;j++)
+	    sum += mat_get(A,i,j) - mat_get(B,i,j);
+}
+
 
