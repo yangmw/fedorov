@@ -1,5 +1,5 @@
 // Date created: 29 Apr 2013
-// Last Modified: 13 Jun 2013 (10:54:54)
+// Last Modified: 13 Jun 2013 (12:42:12)
 //
 // Brief:
 // Input:  N - number of elements for a Random NxN matrix
@@ -58,17 +58,29 @@ int main (int argc, char** argv){
     // Random seed
     srand(time(NULL));
     // Construct Random matrix A and random vector b
-    for (int i=0; i<dim; i++) {
+    for (int i=0; i<dim*dim; i++) {
 	RND = (double)rand()/RAND_MAX; //Throw away first random number
 	RND = (double)rand()/RAND_MAX;
-	b_val[i] = RND;
-	vec_set(b,i, b_val[i]);
-	for (int j=0; j<dim; j++) {
-	    RND = (double)rand()/RAND_MAX;
-	    A_val[i+dim*j] = RND; //Column major ordering
-	    mat_set(A,i,j,A_val[i+dim*j]);
-	}
+    	A->val[i] = RND;
+	A_val[i] = RND;
     }
+    for (int i=0; i<dim; i++) {
+	RND = (double)rand()/RAND_MAX;
+	b->val[i] = RND;
+	b_val[i];
+    }
+    //// Construct Random matrix A and random vector b
+    //for (int i=0; i<dim; i++) {
+	//RND = (double)rand()/RAND_MAX; //Throw away first random number
+	//RND = (double)rand()/RAND_MAX;
+	//b_val[i] = RND;
+	//vec_set(b,i, b_val[i]);
+	//for (int j=0; j<dim; j++) {
+	    //RND = (double)rand()/RAND_MAX;
+	    //A_val[i+dim*j] = RND; //Column major ordering
+	    //mat_set(A,i,j,A_val[i+dim*j]);
+	//}
+    //}
     // Allocate memory for gsl matrix and vectors
     gsl_matrix* A_gsl = gsl_matrix_alloc(dim,dim);
     gsl_matrix* Q_gsl = gsl_matrix_alloc(dim,dim);
@@ -82,8 +94,6 @@ int main (int argc, char** argv){
     gsl_vector *x_gsl = gsl_vector_alloc(dim);
     // gsl QR Algorithm for solving Ax = b
     t1_qr_gsl = clock();
-    //qrdec(Q, R);
-    //qrback(x, Q, R, b); 
     gsl_linalg_QR_decomp(Q_gsl, tau);
     gsl_linalg_QR_solve(Q_gsl, tau, b_gsl, x_gsl);
     t2_qr_gsl = clock();
@@ -93,8 +103,6 @@ int main (int argc, char** argv){
     mat_memcpy(Q,A);
     
     t1_qr = clock();
-    //gsl_linalg_QR_decomp(Q_gsl, tau);
-    //gsl_linalg_QR_solve(Q_gsl, tau, b_gsl, x_gsl);
     qrdec(Q, R);
     qrback(x, Q, R, b); 
     t2_qr = clock();
@@ -113,7 +121,7 @@ int main (int argc, char** argv){
 
     time_qr =     (double)(t2_qr-t1_qr)/(CLOCKS_PER_SEC);
     time_qr_gsl = (double)(t2_qr_gsl-t1_qr_gsl)/(CLOCKS_PER_SEC);
-    fprintf(stderr,"%d %0.15f %0.15f \n", dim, time_qr, time_qr_gsl);
+    fprintf(stderr,"%d %0.6f %0.6f \n", dim, time_qr, time_qr_gsl);
 
     // Free memory 
     mat_free(A);
