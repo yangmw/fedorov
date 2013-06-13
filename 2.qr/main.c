@@ -1,5 +1,5 @@
 // Date created: 29 Apr 2013
-// Last Modified: 13 Jun 2013 (10:50:37)
+// Last Modified: 13 Jun 2013 (10:54:54)
 //
 // Brief:
 // Input:  N - number of elements for a Random NxN matrix
@@ -95,8 +95,8 @@ int main (int argc, char** argv){
     t1_qr = clock();
     //gsl_linalg_QR_decomp(Q_gsl, tau);
     //gsl_linalg_QR_solve(Q_gsl, tau, b_gsl, x_gsl);
-    //qrdec(Q, R);
-    //qrback(x, Q, R, b); 
+    qrdec(Q, R);
+    qrback(x, Q, R, b); 
     t2_qr = clock();
     
     mat_mul_vec(c, A, x);
