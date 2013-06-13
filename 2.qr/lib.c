@@ -1,6 +1,6 @@
 // Filename: lib.c
 // Date created: 03 Jun 2013
-// Last Modified: 11 Jun 2013 (12:55:15)
+// Last Modified: 12 Jun 2013 (15:36:15)
 //
 // Brief:
 // Input:
@@ -41,4 +41,11 @@ void vec_print_gsl(gsl_vector *v, int pre){
     }
     printf("\n");
     printf("\n");
+}
+
+// Take difference of two gsl vectors are equal v = w ?
+void vec_diff_gsl(double sum, const gsl_vector* v, const gsl_vector* w){
+    assert(v->size == w->size);	
+    for(int i=0;i<v->size;i++)
+	    sum += gsl_vector_get(v,i) - gsl_vector_get(w,i);
 }

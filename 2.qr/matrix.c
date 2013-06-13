@@ -1,6 +1,6 @@
 // Filename: matrix.c
 // Date created: 05 May 2013
-// Last Modified: 10 Jun 2013 (13:22:42)
+// Last Modified: 12 Jun 2013 (15:49:33)
 //
 // Brief: Methods for matrix type structure
 // The matrix is of typedef mat with a column major structure
@@ -201,7 +201,7 @@ void mat_mul_vec_T(vec*c, const mat* A, const vec* b){
 	}
 }
 
-void mat_check(double sum, const mat* A, const mat* B){
+void mat_diff(double sum, const mat* A, const mat* B){
     assert(A->row == B->row && A->col == B->col);	
     for(int i=0;i<B->row;i++)
 	for(int j=0;j<B->col;j++)

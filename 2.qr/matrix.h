@@ -1,6 +1,6 @@
 // Filename: matrix.h
 // Date created: 05 May 2013
-// Last Modified: 10 Jun 2013 (13:22:34)
+// Last Modified: 12 Jun 2013 (15:49:42)
 //
 // Brief: Headerfile for matrix functions
 //
@@ -45,7 +45,7 @@ void mat_mul_vec(vec* c, const mat* A, const vec* b);   //A x b
 void mat_mul_vec_T(vec* c, const mat* A, const vec* b); //A'x b
 
 void mat_transpose(mat* A);  
-void mat_comp(double value, const mat*A, const mat*B); //Check if A = B
+void mat_diff(double value, const mat*A, const mat*B); //Check if A = B
 
 double mat_det(const mat* A);
 
