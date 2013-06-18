@@ -1,6 +1,6 @@
 // Filename: test.C
 // Date created: 03 May 2013
-// Last Modified: 12 Jun 2013 (16:03:58)
+// Last Modified: 17 Jun 2013 (13:07:25)
 //
 // Brief: Testfile to see that vector.h functions is working
 // Input: N/A
@@ -102,7 +102,7 @@ int main(){
     printf("Matrix A:\n");
     mat_print(A, pre);
     mat_memcpy(invA, A);
-    qr_inv(invA);
+    qrinverse(invA);
     printf("Matrix inv(A):\n");
     mat_print(invA, pre);
     printf("Matrix inv(A)*A:\n");
@@ -134,12 +134,12 @@ int main(){
     printf("Vector x_gsl:\n");
     vec_print_gsl(x_gsl, pre);
     
-    //Matrix vector multiplication c = a*A*x + b*y 
+    // Matrix vector multiplication c = a*A*x + b*y 
     gsl_blas_dgemv(NT, 1.0, A_gsl, x_gsl, 0.0, c_gsl);
     printf("Vector A_gsl*x_gsl = b_gsl:\n");
     vec_print_gsl(c_gsl, pre);
 
-    //Free memory
+    // Free memory
     gsl_vector_free(c_gsl);
     gsl_vector_free(b_gsl);
     gsl_vector_free(tau_gsl);

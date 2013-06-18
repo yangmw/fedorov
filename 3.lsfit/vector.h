@@ -1,6 +1,6 @@
 // Filename: vector.h
 // Date created: 30 Apr 2013
-// Last Modified: 13 May 2013 (13:29:43)
+// Last Modified: 17 Jun 2013 (12:55:56)
 //
 // Brief: Header file for the vector structure
 // Input: number of elements
@@ -30,9 +30,9 @@ void vec_print(vec* v, int precision);
 void vec_memcpy(const vec* dst, const vec* src);
 void vec_scale(vec* v,const double scale);
 void vec_add(vec* u, const vec* v, double s);
-void vec_div(vec* v, const vec* u);
 double vec_norm(const vec* v);
 double vec_dot(const vec* u, const vec* v);
-
+void vec_diff(double sum, const vec* v, const vec* src);
+void vec_div(vec *v, const vec* w);
 #define VECTOR_H
 #endif

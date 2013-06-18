@@ -1,6 +1,6 @@
 // Filename: vector.c
 // Date created: 30 Apr 2013
-// Last Modified: 13 May 2013 (13:30:20)
+// Last Modified: 17 Jun 2013 (12:46:25)
 //
 // Brief: Methods for the Vector type structure
 // Input: n elements 
@@ -10,14 +10,15 @@
 // Original Author: Dimitri Fedorov (fedorov@phys.au.dk)
 // Author:Yang Min Wang (ymwang@chem.au.dk)
 
+#ifndef VECTOR_H
+#define VECTOR_H
+
 #include <assert.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdbool.h>
 #include <math.h>
 #include <string.h>
-
-#define VECTOR_H
 
 typedef struct {
     size_t size;
@@ -37,7 +38,7 @@ vec* vec_new(size_t n){
 
 void vec_free(vec* v){
     assert(v->owner); 
-    free(v->val); 
+    free(v->val);
     free(v);
 }
 
@@ -64,16 +65,24 @@ void vec_memcpy(const vec* dst, const vec* src){
 
 void vec_print(vec* v, int pre){
     assert(v->size > 0 && pre < 18 && pre > 0);
-	for(int i=0; i<v->size; i++){
-	    printf("  %*.*f", pre*4, pre, vec_get(v,i));
-	}
-	printf("\n");
+    for(int i=0; i<v->size; i++){
+	printf("  %*.*f", pre*4, pre, vec_get(v,i));
+    }
+    printf("\n");
+    printf("\n");
 }
 
 //v = v*s
 void vec_scale(vec *v, const double scale){
     for(int i=0; i<v->size; i++)
 	vec_set(v,i, scale*vec_get(v,i));
+}
+
+//v = v/w
+void vec_div(vec *v, vec* w){
+    assert(v->size == w->size);
+    for(int i=0; i<v->size; i++)
+	vec_set(v,i, vec_get(v,i)/vec_get(w,i));
 }
 
 //v = v + s*u
@@ -96,12 +105,6 @@ double vec_dot(const vec* u, const vec* v){
     }
     return s;
 }
-//v = v/u
-void vec_div(vec* v, const vec* u){
-    assert(v->size == u->size);
-    for(int i=0; i<v->size; i++)
-    	vec_set(v,i,vec_get(v,i)/vec_get(u,i));
-}
 
 //||v||
 double vec_norm(const vec* v){
@@ -110,3 +113,11 @@ double vec_norm(const vec* v){
     norm = sqrt(vec_dot(v,v));
     return norm;
 }
+
+void vec_diff(double sum, const vec* v, const vec* w){
+    assert(v->size == w->size);
+    for(int i=0; i<v->size; i++)
+	sum += vec_get(v,i)-vec_get(w,i);
+}
+
+#endif /* VECTOR_H */

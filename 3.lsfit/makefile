@@ -1,6 +1,6 @@
 # Filename: makefile
 # Date created: 13 May 2013
-# Last Modified: 29 May 2013 (14:40:08)
+# Last Modified: 17 Jun 2013 (17:08:28)
 #
 # Brief: Makefile for running least squre fit
 # Input:
@@ -10,37 +10,36 @@
 # Author: Yang Min Wang (ymwang@chem.au.dk)
 
 # Set compiler
-CC = cc      
+#CC = cc
 # Set compiler flags for C
-CFLAGS += -O3 -Wall --std=c99 -I/opt/local/include -I. -I$(HOME)/include/gc-7.2  
-# Extra libraries to link
-LDLIBS += -lm -L/opt/local/lib -lgsl -lgslcblas -L$(HOME)/include/gc-7.2  
-# Am I on lifa?
-HOST = $(findstring ymwang, $(shell hostname)) 
+CFLAGS += --std=c99 -Wall -O `gsl-config --cflags`
+LDLIBS += `gsl-config --libs`
+OBJ     = matrix.o vector.o lsfit.o qrdec.o qrback.o qrinverse.o lib.o
 
-# Set default target (for make)
-all: clear_screen clean run plotA plot set_premissions 
+# Extra libraries to link
+LDLIBS += `gsl-config --libs`
+#LDLIBS += -lm -L/opt/local/lib -lgsl -lgslcblas 
+
+#Set default target (for make)
+all: plotA.svg set_premissions 
 	@echo Compiled and Run completed successfully 
 
-# Clean screen
-clear_screen:
-	clear 
-	clear
+# Run the main program
+plotA.svg: plotA.gpl lsfit.dat
+	gnuplot plotA.gpl
 
-# PlotA
-plotA: 
-	gnuplot plotA.gpi 
+lsfit.dat: main makefile
+	./main > lsfit.dat 
 
-plot:
-	gnuplot plot.gpi
+# Testing the QR algorithm:
+test: runtest set_premissions
+	./runtest 
+	@echo 
+	@echo Test compiled and ended successfully, see test.dat 
 
-# Run 
-run: main 
-	./main > plotA.dat	
-
-# Linking the main program
-main: main.o vector.o matrix.o 
-test: test.o vector.o matrix.o
+# Linking
+main: $(OBJ)
+runtest: $(OBJ)
 
 # Set read premissions using subshell (;)
 set_premissions:
@@ -53,9 +52,9 @@ endif
 
 # Target clean all
 clean: 
-	@rm -f main test 
+	@rm -f main runtest 
 	@rm -f *.o 
 	@rm -f *.svg
-	@rm -f plotA.dat 
+	@rm -f *.dat 
 	@echo Clean done
 

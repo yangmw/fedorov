@@ -1,6 +1,6 @@
 // Filename: qrbak.c
 // Date created: 12 May 2013
-// Last Modified: 12 May 2013 (23:17:58)
+// Last Modified: 08 Jun 2013 (15:29:13)
 //
 // Brief: QR-backsubstituion Algorithm
 // Solves the equation QRx = b
@@ -12,7 +12,7 @@
 // Original Author: Dimitri Fedorov (fedorov@phys.au.dk)
 // Author: Yang Min Wang (ymwang@chem.au.dk)
 
-#include <matrix.h>
+#include "matrix.h"
 #include <assert.h>
 
 //Brief: Solving Ux = y, U is a upper triangular matrix
@@ -30,17 +30,14 @@ void backsub(vec* x, const mat* U, const vec* b){
     }
 }
 
-//Brief: Main driver for solving Rx = Q'b, R is a upper triangular matrix
-void qrback(vec* x, const mat* Q, const mat* R, vec* b){
-    vec* c = vec_new(Q->row);
-    mat_mul_vec_T(c,Q,b);
-
+//Brief: Main driver for solving Rx = Q^T*b, R is a upper triangular matrix
+void qrback(vec* x, const mat* Q, const mat* R, const vec* b){
+    vec* c = vec_new(R->row);
     // Rx = Q'b back-substitution
-    backsub(x,R,c); 
+    mat_mul_vec_T(c, Q, b);
+    backsub(x,R,c);    
     vec_free(c);
 }
-
-
 
 
 

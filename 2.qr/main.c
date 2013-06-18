@@ -1,5 +1,5 @@
 // Date created: 29 Apr 2013
-// Last Modified: 13 Jun 2013 (12:42:12)
+// Last Modified: 17 Jun 2013 (13:25:04)
 //
 // Brief:
 // Input:  N - number of elements for a Random NxN matrix
@@ -94,8 +94,9 @@ int main (int argc, char** argv){
     gsl_vector *x_gsl = gsl_vector_alloc(dim);
     // gsl QR Algorithm for solving Ax = b
     t1_qr_gsl = clock();
-    gsl_linalg_QR_decomp(Q_gsl, tau);
-    gsl_linalg_QR_solve(Q_gsl, tau, b_gsl, x_gsl);
+    qrdec(Q, R);
+    qrback(x, Q, R, b); 
+
     t2_qr_gsl = clock();
 
     gsl_blas_dgemv(NT, 1.0, A_gsl, x_gsl, 0.0, c_gsl);
@@ -103,8 +104,9 @@ int main (int argc, char** argv){
     mat_memcpy(Q,A);
     
     t1_qr = clock();
-    qrdec(Q, R);
-    qrback(x, Q, R, b); 
+    gsl_linalg_QR_decomp(Q_gsl, tau);
+    gsl_linalg_QR_solve(Q_gsl, tau, b_gsl, x_gsl);
+
     t2_qr = clock();
     
     mat_mul_vec(c, A, x);

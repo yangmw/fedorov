@@ -1,6 +1,6 @@
 // Filename: matrix.c
 // Date created: 05 May 2013
-// Last Modified: 12 Jun 2013 (15:49:33)
+// Last Modified: 17 Jun 2013 (13:44:18)
 //
 // Brief: Methods for matrix type structure
 // The matrix is of typedef mat with a column major structure
@@ -63,7 +63,7 @@ void mat_set(const mat* A, const size_t i, const size_t j, double value){
 }
 
 void mat_get_col(vec* c, const mat* A, const size_t k){
-  assert(c->size = A->row);// && i < A->col);
+  assert(c->size == A->row);// && i < A->col);
   //c->owner = true;
   //c->stride=1;
   for(int i=0; i<A->row; i++)

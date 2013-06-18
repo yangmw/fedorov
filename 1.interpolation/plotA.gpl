@@ -24,6 +24,6 @@ set ylabel "y"
 set title  "A. - Interpolation with different splines"
 
 plot 'plotA.dat' index 0 with points pt 7 title "points", \
-     ''          index 1 with lines  title "linear", \
-     ''          index 2 with lines  title "quadratic", \
-     ''          index 3 with lines  title "cubic"
+     ''          index 1 with lines title "linear", \
+     ''          index 2 with lines title "quadratic", \
+     ''          index 3 with lines title "cubic"

@@ -1,5 +1,5 @@
 # Date created: 27 Apr 2013
-# Last Modified: 13 Jun 2013 (12:11:27)
+# Last Modified: 17 Jun 2013 (14:41:28)
 #
 # Brief: 
 # 
@@ -43,8 +43,8 @@ test: clear_screen clean runtest set_premissions
 	@echo Test compiled and ended successfully, see test.dat 
 
 # Linking the main program
-main: vector.o matrix.o qrdec.o qrback.o qrdet.o inverse.o lib.o
-runtest: vector.o matrix.o qrdec.o qrback.o qrdet.o inverse.o lib.o
+main: vector.o matrix.o qrdec.o qrback.o qrdet.o qrinverse.o lib.o
+runtest: vector.o matrix.o qrdec.o qrback.o qrdet.o qrinverse.o lib.o
 
 # Set read premissions using subshell (;)
 set_premissions:
