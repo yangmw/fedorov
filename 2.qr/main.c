@@ -108,22 +108,20 @@ int main (int argc, char** argv){
     gsl_linalg_QR_solve(Q_gsl, tau, b_gsl, x_gsl);
 
     t2_qr = clock();
-    
     mat_mul_vec(c, A, x);
 
     // Check if the answer is correct
-    sum1 = 0;
-    sum2 = 0;
-    vec_diff_gsl(sum1, b_gsl, c_gsl);
-    vec_diff(sum2, b, c);
+    sum1 = vec_diff(b, c);
+    sum2 = vec_diff_gsl(b_gsl, c_gsl);
+    
     if (sum1 > 10e-16 && sum2 > 10e-16 ){
 	fprintf(stderr, "QR Algorithm failed \n");
         exit(1);
     }
 
-    time_qr =     (double)(t2_qr-t1_qr)/(CLOCKS_PER_SEC);
-    time_qr_gsl = (double)(t2_qr_gsl-t1_qr_gsl)/(CLOCKS_PER_SEC);
-    fprintf(stderr,"%d %0.6f %0.6f \n", dim, time_qr, time_qr_gsl);
+    time_qr =     (double)(t2_qr-t1_qr); // /(CLOCKS_PER_SEC);
+    time_qr_gsl = (double)(t2_qr_gsl-t1_qr_gsl); // /(CLOCKS_PER_SEC);
+    fprintf(stderr,"%d %0.6f %0.6f %0.6f %0.6f\n", dim, time_qr, time_qr_gsl, sum1, sum2);
 
     // Free memory 
     mat_free(A);

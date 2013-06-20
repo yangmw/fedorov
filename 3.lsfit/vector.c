@@ -114,10 +114,11 @@ double vec_norm(const vec* v){
     return norm;
 }
 
-void vec_diff(double sum, const vec* v, const vec* w){
+double vec_diff(double sum, const vec* v, const vec* w){
     assert(v->size == w->size);
     for(int i=0; i<v->size; i++)
 	sum += vec_get(v,i)-vec_get(w,i);
+    return sum;
 }
 
 #endif /* VECTOR_H */

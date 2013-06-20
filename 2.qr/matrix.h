@@ -11,7 +11,7 @@
 #ifndef size_t         
 #include <stddef.h>
 #endif
-#include <vector.h>
+#include "vector.h"
 
 //Include garbage collector
 //#include <gc.h>
@@ -29,7 +29,7 @@ mat* mat_new(size_t row, size_t col);
 void mat_free(mat* A);
 double mat_get(const mat* A, int idx, int idy);
 void mat_set(mat* A, int idx, int idy, double value);
-void mat_set_id(mat* A); //Creating an identity matrix 
+void mat_set_identity(mat* A); //Creating an identity matrix 
  
 void mat_get_col(vec* c, const mat* A, const int col);
 void mat_set_col(mat* A, const vec* c, const int col);
@@ -45,7 +45,7 @@ void mat_mul_vec(vec* c, const mat* A, const vec* b);   //A x b
 void mat_mul_vec_T(vec* c, const mat* A, const vec* b); //A'x b
 
 void mat_transpose(mat* A);  
-void mat_diff(double value, const mat*A, const mat*B); //Check if A = B
+double mat_diff(const mat*A, const mat*B); //Check if A = B
 
 double mat_det(const mat* A);
 

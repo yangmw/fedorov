@@ -43,9 +43,13 @@ void vec_print_gsl(gsl_vector *v, int pre){
     printf("\n");
 }
 
-// Take difference of two gsl vectors are equal v = w ?
-void vec_diff_gsl(double sum, const gsl_vector* v, const gsl_vector* w){
+// Take difference of two gsl vectors sum = w - v
+double vec_diff_gsl(const gsl_vector* v, const gsl_vector* w){
     assert(v->size == w->size);	
+    double sum = 0;
     for(int i=0;i<v->size;i++)
 	    sum += gsl_vector_get(v,i) - gsl_vector_get(w,i);
+    return sum;
 }
+
+

@@ -1,6 +1,6 @@
 // Filename: matrix.c
 // Date created: 05 May 2013
-// Last Modified: 17 Jun 2013 (13:44:18)
+// Last Modified: 17 Jun 2013 (14:41:09)
 //
 // Brief: Methods for matrix type structure
 // The matrix is of typedef mat with a column major structure
@@ -16,7 +16,7 @@
 
 #include <math.h>
 #include <assert.h>
-#include <vector.h>
+#include "vector.h"
 
 #ifndef size_t
 #include <stddef.h>
@@ -24,9 +24,6 @@
 
 #include <stdlib.h>
 #include <string.h>
-
-// Include garbage collector
-#include <gc.h>
 
 typedef struct {
 	size_t row;
@@ -54,7 +51,7 @@ void mat_free(mat* A){
 
 double mat_get(const mat* A, const size_t i, const size_t j){
   assert(i < A->row && j < A->col);
-  return A->val[i+j*A->row]; //column major ordering
+  return A->val[i+j*A->row]; // column major ordering
 }
 
 void mat_set(const mat* A, const size_t i, const size_t j, double value){
@@ -86,7 +83,7 @@ void mat_memcpy(mat* A, const mat* B){
     }
 }
 
-void mat_set_id(mat* A){
+void mat_set_identity(mat* A){
     assert(A->row == A->col);
 	for(int i=0; i<A->row; i++){
 		mat_set(A,i,i,1);
@@ -117,7 +114,7 @@ void mat_add(mat* A, const mat* B, double s){
       mat_set(A,i,j,mat_get(A,i,j) + s*mat_get(B,i,j));
 }
 
-// A(m,k) = A(m,n) * B(n,k) 
+// C(m,k) = A(m,n) * B(n,k)  NB! C != B
 void mat_mul(mat*C, const mat* A, const mat* B){
   assert(A->col == B->row);
   double sum;
@@ -189,10 +186,10 @@ void mat_mul_vec(vec* c, const mat* A, const vec* b){
 }
 
 // x(m) = A(n,m)^T x b(n)
-void mat_mul_vec_T(vec*c, const mat* A, const vec* b){
+void mat_mul_vec_T(vec* c, const mat* A, const vec* b){
     assert(A->row == b->size);
     double sum;
-    for (int i=0; i<b->size; i++){
+    for (int i=0; i<A->col; i++){
 	sum = 0;
 	for(int j=0; j<A->row; j++){
 	    sum += mat_get(A,j,i)*vec_get(b,j);	
@@ -201,11 +198,12 @@ void mat_mul_vec_T(vec*c, const mat* A, const vec* b){
 	}
 }
 
-void mat_diff(double sum, const mat* A, const mat* B){
+double mat_diff(const mat* A, const mat* B){
     assert(A->row == B->row && A->col == B->col);	
-    for(int i=0;i<B->row;i++)
-	for(int j=0;j<B->col;j++)
+    double sum = 0;
+    for(int i=0; i<A->row; i++)
+	for(int j=0; j<B->col; j++)
 	    sum += mat_get(A,i,j) - mat_get(B,i,j);
+    return sum;
 }
-
 

@@ -29,7 +29,7 @@ void qrinverse(mat* invA){
     mat* R = mat_new(invA->row, invA->col);
     mat* invR = mat_new(invA->row, invA->col);
 
-    mat_set_id(I);
+    mat_set_identity(I);
  
     mat_memcpy(Q, invA);
     qrdec(Q,R); 

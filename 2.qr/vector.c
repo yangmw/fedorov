@@ -1,6 +1,6 @@
 // Filename: vector.c
 // Date created: 30 Apr 2013
-// Last Modified: 12 Jun 2013 (15:49:24)
+// Last Modified: 17 Jun 2013 (12:46:25)
 //
 // Brief: Methods for the Vector type structure
 // Input: n elements 
@@ -65,17 +65,24 @@ void vec_memcpy(const vec* dst, const vec* src){
 
 void vec_print(vec* v, int pre){
     assert(v->size > 0 && pre < 18 && pre > 0);
-	for(int i=0; i<v->size; i++){
-	    printf("  %*.*f", pre*4, pre, vec_get(v,i));
-	}
-	printf("\n");
-	printf("\n");
+    for(int i=0; i<v->size; i++){
+	printf("  %*.*f", pre*4, pre, vec_get(v,i));
+    }
+    printf("\n");
+    printf("\n");
 }
 
 //v = v*s
 void vec_scale(vec *v, const double scale){
     for(int i=0; i<v->size; i++)
 	vec_set(v,i, scale*vec_get(v,i));
+}
+
+//v = v/w
+void vec_div(vec *v, vec* w){
+    assert(v->size == w->size);
+    for(int i=0; i<v->size; i++)
+	vec_set(v,i, vec_get(v,i)/vec_get(w,i));
 }
 
 //v = v + s*u
@@ -107,10 +114,12 @@ double vec_norm(const vec* v){
     return norm;
 }
 
-void vec_diff(double sum, const vec* v, const vec* w){
+double vec_diff(const vec* v, const vec* w){
+    double sum = 0;
     assert(v->size == w->size);
     for(int i=0; i<v->size; i++)
 	sum += vec_get(v,i)-vec_get(w,i);
+    return sum;
 }
 
 #endif /* VECTOR_H */

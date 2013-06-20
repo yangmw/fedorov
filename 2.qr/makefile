@@ -16,7 +16,7 @@ LDLIBS += -lm -L/opt/local/lib -lgsl -lgslcblas -L$(HOME)/include/gc-7.2
 # Am I on lifa?
 HOST = $(findstring ymwang, $(shell hostname)) 
 
-N = 2 10 50 100 200 300 400 500 600 700 800 900 1000
+N = 250 300 350 400 450 500 550 600 650 700 750 800 850 900 950 1000 1050 1100
 
 #Set default target (for make)
 all: clear_screen clean plotB.svg set_premissions 

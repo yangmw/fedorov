@@ -36,6 +36,7 @@ int main(){
     int pre = 2;
     // Initialize the matrices
     mat* A = mat_new(dim, dim);
+    mat* I = mat_new(dim, dim);
     mat* invA = mat_new(dim, dim);
     mat* C = mat_new(dim, dim);
     mat* Q = mat_new(dim, dim);
@@ -50,6 +51,7 @@ int main(){
     // Initialize random seed
     srand(time(NULL));
     double RND;
+    double sum;
     // Fill matrix A and b with random numbers 
     for(int i=0; i<dim; i++){
 	    RND = (double)rand()/RAND_MAX;	    
@@ -62,6 +64,7 @@ int main(){
 	    mat_set(A,i,j,A_val[i+dim*j]);
 	}
     }
+    
     // QR-algorithm on Matrix A 
     title("Testing QR Algorithm...");
     printf("Matrix A:\n");
@@ -82,6 +85,12 @@ int main(){
     mat_mul(C, Q, R);
     mat_print(C, pre);
 
+    sum = mat_diff(C,A);
+    if (sum > 10e-16){
+	fprintf(stderr, "Qx = b Algorithm failed \n");
+        exit(1);
+    }
+
     // Solving Ax = b
     title("Testing Ax = b solver...");
     printf("Matrix A:\n");
@@ -97,6 +106,12 @@ int main(){
     mat_mul_vec(c, A, x);
     vec_print(c, pre);
 
+    sum = vec_diff(c,b);
+    if (sum > 10e-16){
+	fprintf(stderr, "Ax = b Algorithm failed \n");
+        exit(1);
+    }
+
     // Finding the inverse of matrx A...
     title("Testing the inverse of matrix A...");
     printf("Matrix A:\n");
@@ -111,6 +126,13 @@ int main(){
     printf("Matrix A*inv(A):\n");
     mat_mul(C,A,invA);
     mat_print(C, pre);
+
+    mat_set_identity(I);
+    sum = mat_diff(I,C);
+    if (sum > 10e-16){
+	fprintf(stderr, "Ax = b Algorithm failed \n");
+        exit(1);
+    }
 
     // Testing GSL QR-algorithm...
     title("Testing Ax = b for GSL...");
@@ -148,6 +170,8 @@ int main(){
     gsl_matrix_free(Q_gsl);
 
     mat_free(A);
+    mat_free(I);
+    mat_free(C);
     mat_free(Q);
     mat_free(R);
     mat_free(invA);
